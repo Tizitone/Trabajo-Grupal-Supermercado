@@ -1,16 +1,20 @@
-import java.util.HashMap;
+import java.util.Date;
 
 public class ClaseGestora {
-    private HashMap<Integer, Cliente> clientes;
+    private Date dia;
+    private double ctaCte;
+    //hashmap<int,Administrativo>EAdministrativos();
+    //EPersonal<int,Personal>: hashMap();
 
 
-    public ClaseGestora(){
-        clientes = new HashMap<>();
+    public ClaseGestora() {
+        this.dia = null;
+        this.ctaCte = 0;
     }
 
-    public HashMap<Integer, Cliente> getClientes() {
-        return clientes;
+    public ClaseGestora(Date dia, double ctaCte) {
+        this.dia = dia;
+        this.ctaCte = ctaCte;
     }
-
 
 }
