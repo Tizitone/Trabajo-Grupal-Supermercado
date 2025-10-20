@@ -1,4 +1,4 @@
-import netscape.javascript.JSONObject;
+import org.json.JSONObject;
 
 import java.util.Random;
 
@@ -54,8 +54,10 @@ public class Cajero extends Personal{
                 ']';
     }
 
-
-    public JSONObject serializar(){
+    /*
+    public org.json.JSONObject serializar(){
 
     }
+
+     */
 }

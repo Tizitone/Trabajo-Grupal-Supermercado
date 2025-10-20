@@ -15,9 +15,12 @@ public class Repositor extends Personal {
         return 1;
     }
 
+    /*
     public boolean reponerProducto(Almacenamiento){
 
     }
+
+     */
 
     @Override
     public String toString() {
