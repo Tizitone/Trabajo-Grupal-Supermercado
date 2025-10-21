@@ -1,10 +1,11 @@
 package Gestion.Empleados;
 
 import Gestion.Empleados.Personal;
+import Gestion.Interfaces.ISalario;
 
 import java.util.HashMap;
 
-public class Repositor extends Personal {
+public class Repositor extends Personal implements ISalario {
 
     public Repositor(String nombre, int DNI, char genero){
         super(nombre, DNI, genero);

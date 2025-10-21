@@ -2,10 +2,11 @@ package Gestion.Empleados;
 
 import Gestion.Clientes.Cliente;
 import Gestion.Empleados.Personal;
+import Gestion.Interfaces.ISalario;
 
 import java.util.Random;
 
-public class Cajero extends Personal {
+public class Cajero extends Personal implements ISalario {
 
     public Cajero(String nombre, int DNI, char genero){
         super(nombre, DNI, genero);
