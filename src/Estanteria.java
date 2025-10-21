@@ -1,3 +1,4 @@
+package Gestion;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Objects;
@@ -9,13 +10,13 @@ public class Estanteria {
     private int capacidadProductos;
 
     public Estanteria() {
-        this.id = null;
+        this.id = UUID.randomUUID();;
         this.productos = new ArrayList<Producto>();
         this.capacidadProductos = 0;
     }
 
-    public Estanteria(Integer id, int capacidadProductos) {
-        this.id = UUID.fromString(id.toString().toLowerCase());
+    public Estanteria(int capacidadProductos) {
+        this.id = UUID.randomUUID();
         this.productos = new ArrayList<Producto>();
         this.capacidadProductos = capacidadProductos;
     }
@@ -86,6 +87,17 @@ public class Estanteria {
         }
 
         return exito;
+    }
+    public String listarProductos()
+    {
+    	StringBuilder sb = new StringBuilder();
+    	
+    	for(Producto p:productos)
+    	{
+    		sb.append(p.toString()).append("\n");
+    	}
+    	
+    	return sb.toString();
     }
 
 

@@ -1,3 +1,4 @@
+package Gestion;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
@@ -9,13 +10,13 @@ public class Almacenamiento {
     private int capacidadEstanterias;
 
     public Almacenamiento() {
-        this.id = null;
+        this.id = UUID.randomUUID();
         this.direccion = "";
         this.estanterias = new ArrayList<Estanteria>();
         this.capacidadEstanterias = 0;
     }
-    public Almacenamiento(String direccion, ArrayList<Estanteria> estanterias, int capacidadEstanterias) {
-        this.id = UUID.fromString(direccion.toLowerCase());
+    public Almacenamiento(String direccion, int capacidadEstanterias) {
+        this.id = UUID.randomUUID();
         this.direccion = direccion;
         this.estanterias = new ArrayList<Estanteria>();
         this.capacidadEstanterias = capacidadEstanterias;
@@ -25,17 +26,12 @@ public class Almacenamiento {
         return id;
     }
 
-    private void setId(String direccion) {
-        this.id = UUID.fromString(direccion.toLowerCase());
-    }
-
     public String getDireccion() {
         return direccion;
     }
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
-        setId(direccion);
     }
 
     public ArrayList<Estanteria> getEstanterias() {
@@ -52,6 +48,44 @@ public class Almacenamiento {
 
     public void setCapacidadEstanterias(int capacidadEstanterias) {
         this.capacidadEstanterias = capacidadEstanterias;
+    }
+    public boolean agregarEstanteria(Estanteria e)
+    {
+        boolean exito = false;
+
+        if(capacidadEstanterias>0)
+        {
+        	capacidadEstanterias--;
+            exito = estanterias.add(e);
+        }
+        return exito;
+    }
+    
+    public String listarEstanterias()
+    {
+    	StringBuilder sb = new StringBuilder();
+    	
+    	for(Estanteria e : estanterias)
+    	{
+    		sb.append(e.toString()).append("\n");
+    	}
+    	
+    	return sb.toString();
+    }
+    public String buscarEstanteriaPorID(String id)
+    {
+    	StringBuilder sb = new StringBuilder();
+    	UUID uuidbuscado = UUID.fromString(id);
+    	
+    	for(Estanteria e : estanterias)
+    	{
+    		if(e.getId().equals(uuidbuscado))
+    		{
+    			sb.append(e.toString());
+    		}
+    	}
+    	
+    	return sb.toString();
     }
 
     @Override
