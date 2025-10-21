@@ -1,25 +1,31 @@
+package Gestion;
 import java.util.Objects;
 import java.util.UUID;
 
 public class Producto {
     private UUID id;
-    private String nombre,marca,descripcion;
-    private double precioUnitario;
+    private String nombre,marca,descripcionAdicional;
+    private double precioUnitario, peso;
     private int stock;
+    private ETipoMedida medida;
 
     public Producto() {
-        this.id = null;
+        this.id = UUID.randomUUID();
         this.nombre = "";
         this.marca = "";
-        this.descripcion = "";
+        this.descripcionAdicional = "";
         this.precioUnitario = 0;
+        this.peso = 0;
         this.stock = 0;
     }
 
-    public Producto(String nombre,String marca, String descripcion,double precioUnitario, int stock) {
-        this.id = UUID.fromString(nombre.toLowerCase());
+    public Producto(String nombre,String marca,ETipoMedida medida,double peso, String descripcionAdicional ,double precioUnitario, int stock) {
+        this.id = UUID.randomUUID();
         this.nombre = nombre;
         this.precioUnitario = precioUnitario;
+        this.descripcionAdicional = descripcionAdicional;
+        this.medida = medida;
+        this.peso = peso;
         this.stock = stock;
     }
 
@@ -29,13 +35,9 @@ public class Producto {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-        setId();
     }
 
-    public UUID getId() {
-        return id;
-    }
-
+    
     public String getMarca() {
         return marca;
     }
@@ -43,17 +45,33 @@ public class Producto {
     public void setMarca(String marca) {
         this.marca = marca;
     }
+    
+    public String getDescripcionAdicional() {
+		return descripcionAdicional;
+	}
 
-    public String getDescripcion() {
-        return descripcion;
-    }
+	public void setDescripcionAdicional(String descripcionAdicional) {
+		this.descripcionAdicional = descripcionAdicional;
+	}
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
+	public double getPeso() {
+		return peso;
+	}
 
-    private void setId() {
-        this.id = UUID.fromString(nombre.toLowerCase());
+	public void setPeso(int peso) {
+		this.peso = peso;
+	}
+
+	public ETipoMedida getMedida() {
+		return medida;
+	}
+
+	public void setMedida(ETipoMedida medida) {
+		this.medida = medida;
+	}
+
+	public UUID getId() {
+        return id;
     }
 
     public double getPrecioUnitario() {
@@ -72,28 +90,31 @@ public class Producto {
         this.stock = stock;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if(o == this) return  true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Producto producto = (Producto) o;
-        return Objects.equals(id, producto.id);
-    }
+   
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
 
-    @Override
-    public String toString() {
-        return "Producto{\n" +
-                "id=" + id +
-                "\n, nombre='" + nombre + '\'' +
-                "\n, marca='" + marca + '\'' +
-                "\n, descripcion='" + descripcion + '\'' +
-                "\n, precioUnitario=" + precioUnitario +
-                "\n, stock=" + stock +
-                '}';
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Producto other = (Producto) obj;
+		return Objects.equals(id, other.id);
+	}
+
+	@Override
+	public String toString() {
+		return "Producto [\n id=" + id + ",\n nombre=" + nombre + ",\n marca=" + marca + ",\n descripcion="
+				+ descripcionAdicional + ",\n precioUnitario=" + precioUnitario + ",\n stock=" + stock + ",\n peso=" + peso
+				+ medida.getMedida() + "]\n";
+	}
+
+    
 }
