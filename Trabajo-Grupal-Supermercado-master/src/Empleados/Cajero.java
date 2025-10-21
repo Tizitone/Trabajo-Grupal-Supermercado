@@ -1,5 +1,6 @@
 package Gestion.Empleados;
 
+import Gestion.Clientes.Cliente;
 import Gestion.Empleados.Personal;
 
 import java.util.Random;
@@ -15,7 +16,7 @@ public class Cajero extends Personal {
     }
 
     public void atenderMiembro(Cliente cliente){
-        cliente.setTotalCompra(cliente.getTotalCompra() * cliente.getMembresia().membresia.getDescuento());
+        cliente.setTotalCompra(cliente.getTotalCompra() * cliente.getDescuento());
 
         setProductividad(getProductividad() + 1 );
     }
