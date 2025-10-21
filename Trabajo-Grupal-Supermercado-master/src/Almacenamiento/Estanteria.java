@@ -1,13 +1,12 @@
-package Gestion.Almacenamiento;
-
+package Almacenamiento;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.UUID;
 
 public class Estanteria {
-    private UUID id;
-    private ArrayList<Producto>productos;
+    private final UUID id;
+    private final ArrayList<Producto>productos;
     private int capacidadProductos;
 
     public Estanteria() {
@@ -26,10 +25,6 @@ public class Estanteria {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = UUID.fromString(id.toString().toLowerCase());
-    }
-
     public int getCapacidadProductos() {
         return capacidadProductos;
     }
@@ -39,6 +34,8 @@ public class Estanteria {
     }
 
     //metodos
+
+    //metodo que agrega un producto a la estanteria
     public boolean agregarProducto(Producto p)
     {
         boolean exito = false;
@@ -46,11 +43,11 @@ public class Estanteria {
 
         for(Producto o : productos)
         {
-            cantidadProductos+=o.getStock();
+            cantidadProductos+=o.getStock(); //obtiene el stock que hay actualmente en la estanteria
         }
-        auxCapacidad = capacidadProductos - cantidadProductos;
+        auxCapacidad = capacidadProductos - cantidadProductos; // esto devuelve la capacidad
 
-        if(auxCapacidad>p.getStock())
+        if(auxCapacidad>p.getStock()) // si hay suficiente capacidad como para agregar stock entonces permite quitar esa cantidad de capacidad a la estanteria
         {
             capacidadProductos-=p.getStock();
             exito = productos.add(p);
@@ -74,20 +71,26 @@ public class Estanteria {
 
         return exito;
     }
-    public boolean venderProductos(String nombre,int cant)
+    //metodo que resta al stock la cantidad ingresada, y esta misma cantidad se suma a la variable en venta
+    public Producto venderProductos(String id,int cant)
     {
-        boolean exito = false;
         Iterator<Producto> it = productos.iterator();
         while (it.hasNext())
         {
             Producto p = it.next();
-            if(p.getNombre().equals(nombre) && p.getStock()>cant)
+            if(p.getId().equals(UUID.fromString(id)) && p.getStock()>cant)
             {
                 p.setStock((p.getStock()-cant));
+                if(capacidadProductos<1500)
+                {capacidadProductos+=cant;} else if (capacidadProductos>=1500) { //verifica que no se sobrepase de la capacidad limite
+                    capacidadProductos=1500;
+                }
+                p.setCantEnVenta(cant);
+                return p;
             }
         }
 
-        return exito;
+        return null;
     }
     public String listarProductos()
     {
