@@ -1,14 +1,16 @@
-package Gestion.Almacenamiento;
+package Almacenamiento;
+import Enumerators.ETipoMedida;
 
 import java.util.Objects;
 import java.util.UUID;
 
-public class Producto {
-    private UUID id;
+public class Producto implements Comparable{
+    private final UUID id;
     private String nombre,marca,descripcionAdicional;
     private double precioUnitario, peso;
     private int stock;
     private ETipoMedida medida;
+    private int cantEnVenta;
 
     public Producto() {
         this.id = UUID.randomUUID();
@@ -18,6 +20,7 @@ public class Producto {
         this.precioUnitario = 0;
         this.peso = 0;
         this.stock = 0;
+        this.cantEnVenta=0;
     }
 
     public Producto(String nombre,String marca,ETipoMedida medida,double peso, String descripcionAdicional ,double precioUnitario, int stock) {
@@ -28,6 +31,7 @@ public class Producto {
         this.medida = medida;
         this.peso = peso;
         this.stock = stock;
+        this.cantEnVenta=0;
     }
 
     public String getNombre() {
@@ -38,7 +42,6 @@ public class Producto {
         this.nombre = nombre;
     }
 
-    
     public String getMarca() {
         return marca;
     }
@@ -91,9 +94,19 @@ public class Producto {
         this.stock = stock;
     }
 
-   
+    public void setPeso(double peso) {
+        this.peso = peso;
+    }
 
-	@Override
+    public int getCantEnVenta() {
+        return cantEnVenta;
+    }
+
+    public void setCantEnVenta(int cantEnVenta) {
+        this.cantEnVenta = cantEnVenta;
+    }
+
+    @Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
@@ -117,5 +130,11 @@ public class Producto {
 				+ medida.getMedida() + "]\n";
 	}
 
-    
+
+    @Override
+    public int compareTo(Object o) {
+        Producto p = (Producto) o;
+
+        return this.nombre.compareTo(p.nombre);
+    }
 }
