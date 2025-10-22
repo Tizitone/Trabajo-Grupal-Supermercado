@@ -6,33 +6,22 @@ import java.util.UUID;
 
 public class Almacenamiento {
     private final UUID id;
-    private String direccion;
     private ArrayList<Estanteria>estanterias;
     private int capacidadEstanterias;
 
     public Almacenamiento() {
         this.id = UUID.randomUUID();
-        this.direccion = "";
         this.estanterias = new ArrayList<Estanteria>();
         this.capacidadEstanterias = 0;
     }
     public Almacenamiento(String direccion, int capacidadEstanterias) {
         this.id = UUID.randomUUID();
-        this.direccion = direccion;
         this.estanterias = new ArrayList<Estanteria>();
         this.capacidadEstanterias = capacidadEstanterias;
     }
 
     public UUID getId() {
         return id;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
     }
 
     public ArrayList<Estanteria> getEstanterias() {
@@ -105,8 +94,6 @@ public class Almacenamiento {
     public String toString() {
         return "Almacenamiento{" +
                 "id=" + id +
-                ", direccion='" + direccion + '\'' +
-                ", estanterias=" + estanterias +
                 ", capacidadEstanterias=" + capacidadEstanterias +
                 '}';
     }

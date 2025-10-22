@@ -4,6 +4,7 @@ import java.util.Comparator;
 
 import almacenamiento.Producto;
 
+// clase que se va a instanciar cuando se necesite ordenar productos por nombre
 public class OrdenarPorNombre  implements Comparator<Producto> {
 
     @Override

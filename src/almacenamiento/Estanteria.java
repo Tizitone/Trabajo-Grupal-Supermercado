@@ -5,10 +5,13 @@ import java.util.Iterator;
 import java.util.Objects;
 import java.util.UUID;
 
-public class Estanteria {
+import interfaces.IEnsuciable;
+
+public class Estanteria implements IEnsuciable{
     private final UUID id;
     private final ArrayList<Producto>productos;
     private int capacidadProductos;
+    private int suciedad=0;
 
     public Estanteria() {
         this.id = UUID.randomUUID();;
@@ -33,10 +36,19 @@ public class Estanteria {
     public void setCapacidadProductos(int capacidadProductos) {
         this.capacidadProductos = capacidadProductos;
     }
+    
 
     //metodos
 
-    //metodo que agrega un producto a la estanteria
+    public int getSuciedad() {
+		return suciedad;
+	}
+
+	public void setSuciedad(int suciedad) {
+		this.suciedad = suciedad;
+	}
+
+	//metodo que agrega un producto a la estanteria
     public boolean agregarProducto(Producto p)
     {
         boolean exito = false;
@@ -52,6 +64,7 @@ public class Estanteria {
         {
             capacidadProductos-=p.getStock();
             exito = productos.add(p);
+            calcularIndiceSuciedad();
         }
         return exito;
     }
@@ -67,6 +80,7 @@ public class Estanteria {
                 this.capacidadProductos+=p.getStock();
                 it.remove();
                 exito = true;
+                calcularIndiceSuciedad();
             }
         }
 
@@ -86,6 +100,7 @@ public class Estanteria {
                 {capacidadProductos+=cant;} else if (capacidadProductos>=1500) { //verifica que no se sobrepase de la capacidad limite
                     capacidadProductos=1500;
                 }
+                calcularIndiceSuciedad();
                 p.setCantEnVenta(cant);
                 return p;
             }
@@ -126,4 +141,19 @@ public class Estanteria {
                 ", limiteProductos=" + capacidadProductos +
                 '}';
     }
+
+	@Override
+	public int calcularIndiceSuciedad() {
+		this.suciedad++;
+		if(suciedad>100)
+		{
+			this.suciedad=100;
+		}
+		return suciedad;
+	}
+
+	@Override
+	public boolean verificarSuciedad() {
+		return suciedad<50;
+	}
 }

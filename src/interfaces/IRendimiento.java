@@ -2,5 +2,6 @@ package interfaces;
 
 public interface IRendimiento {
 
-    int calcularRendimiento();
+	final int rendimientoBase=50;
+    float calcularRendimiento();
 }

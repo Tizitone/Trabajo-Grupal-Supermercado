@@ -4,16 +4,33 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.UUID;
 
-public class Mostrador {
+import empleados.Limpiador;
+import interfaces.IEnsuciable;
+
+public class Mostrador implements IEnsuciable{
 
     private TreeMap<Producto,Integer> articulos;
     private final int limiteArticulos;
+    private int suciedad=0;
 
     public Mostrador() {
         articulos = new TreeMap<Producto,Integer>();
         limiteArticulos = 1200;
-    }
-    //agrega un producto al mostrador(es decir que ese articulo se encuentra en venta)
+    }  
+    
+    public int getLimiteArticulos() {
+		return limiteArticulos;
+	}
+
+	public int getSuciedad() {
+		return suciedad;
+	}
+	
+	public void setSuciedad(int suciedad) {
+		this.suciedad = suciedad;
+	}
+
+	//agrega un producto al mostrador(es decir que ese articulo se encuentra en venta)
     public boolean agregarArticulos(Producto p)
     {
         boolean exito = false;
@@ -25,6 +42,7 @@ public class Mostrador {
         }
         if(limiteArticulos>cantidadTotalVenta) // verifica que no se rebase el limite
         {
+        	calcularIndiceSuciedad();
             articulos.put(p,p.getCantEnVenta()); //si se puede agregar, se agrega el producto como clave y la cantidad de articulos en venta de ese producto
             exito = true;
         }
@@ -54,8 +72,28 @@ public class Mostrador {
         {
             p.setCantEnVenta(p.getCantEnVenta()-cant);
             exito = true;
+            calcularIndiceSuciedad();
         }
 
         return exito;
     }
+
+	@Override
+	public int calcularIndiceSuciedad() {
+		this.suciedad++;
+		if(this.suciedad>50)
+		{
+			Limpiador.setTiendaLimpia(false);
+		}
+		if(suciedad>100)
+		{
+			this.suciedad=100;
+		}
+		return suciedad;
+	}
+
+	@Override
+	public boolean verificarSuciedad() {
+		return suciedad<50;
+	}
 }
