@@ -1,3 +1,5 @@
+package empleados;
+
 public abstract class Personal extends Empleado {
 
     private int productividad;
@@ -31,19 +33,11 @@ public abstract class Personal extends Empleado {
         this.informe = informe;
     }
 
-    @Override
-    public String toString() {
-        return "Personal[" +
-                " Nombre: " + getNombre() +
-                ", DNI: " + getDNI() +
-                ", Genero: " + getGenero() +
-                ", Salario: " + getSalario() +
-                ", Activo: " + isActivo() +
-                ", Antiguedad: " + getAntiguedad() +
-                ", Informe: " + getInforme() +
-                ", Productividad: " + getProductividad() +
-                ']';
-    }
+	@Override
+	public String toString() {
+		return super.toString()+" | Personal [productividad=" + productividad + ", informe=" + informe + "]";
+	}
 
+  
 
 }

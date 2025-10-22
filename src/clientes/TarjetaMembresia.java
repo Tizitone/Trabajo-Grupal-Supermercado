@@ -1,3 +1,5 @@
+package clientes;
+
 public class TarjetaMembresia {
 
     protected String codigo;

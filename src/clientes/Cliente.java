@@ -1,3 +1,5 @@
+package clientes;
+
 import java.util.ArrayList;
 
 public class Cliente {
@@ -5,7 +7,7 @@ public class Cliente {
     private String nombre;
     private int DNI;
     private double consumosTotales;
-    private TarjetaMembresia Membresia; // no es de este tipo, solo para probar funciones de cliente en empleados.
+    private TarjetaMembresia Membresia;
     private ArrayList<String> cupones = new ArrayList<>();
     private double totalCompra;
 
@@ -23,6 +25,10 @@ public class Cliente {
 
     public TarjetaMembresia getMembresia() {
         return Membresia;
+    }
+
+    public double getDescuento(){
+        return Membresia.membresia.getDescuento();
     }
 
     public ArrayList<String> getCupones() {

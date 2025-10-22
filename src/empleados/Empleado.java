@@ -1,3 +1,5 @@
+package empleados;
+
 import java.util.Objects;
 
 public abstract class Empleado {
