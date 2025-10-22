@@ -51,7 +51,7 @@ public class Limpiador extends Personal implements ISalario, IRendimiento{
 	{
 		boolean seLimpio=false;
 		
-		if(a.getSuciedad()>50)
+		if(a.verificarSuciedad())
 		{
 			this.rendimientoActual+=4;
 			seLimpio = true;
@@ -67,7 +67,7 @@ public class Limpiador extends Personal implements ISalario, IRendimiento{
 		
 		for(Estanteria b : a.getEstanterias())
 		{
-			if(b.getSuciedad()>50)
+			if(b.verificarSuciedad())
 			{
 				sb.append(b.toString()).append("\n");
 			}
