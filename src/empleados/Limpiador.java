@@ -76,15 +76,15 @@ public class Limpiador extends Personal implements ISalario, IRendimiento{
 		return sb.toString();
 	}
 
-	@Override
+	// no requiere un Override porque esta implementandolo
 	public int calcularSalario() {
 		int salarioBase = 100000, salarioTotal=0;
 		salarioTotal = (int)(salarioBase * calcularRendimiento());
 		return salarioTotal;
 	}
 
+	// porque un porcentaje? (me explicas en llamada)
 	//devuelve un porcentaje que sera el indice del rendimiento que tenga
-	@Override
 	public float calcularRendimiento() {
 		int rendimientoTotal=0;
 		rendimientoTotal = IRendimiento.rendimientoBase + rendimientoActual;

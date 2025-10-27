@@ -7,7 +7,7 @@ import registros.Entrevista;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-public class Secretario extends Administrativo implements ISalario {
+public class Secretario extends Administrativo {
 
     protected static TreeMap<Integer, CV> curriculums;
     protected static ArrayList<Entrevista> entrevistas;
@@ -42,9 +42,16 @@ public class Secretario extends Administrativo implements ISalario {
         return lista.toString();
     }
 
-	@Override
-	public int calcularSalario() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    @Override
+    public String toString() {
+        return  "Secretario[ " +
+                " Nombre: " + getNombre() +
+                ", DNI: " + getDNI() +
+                ", Correo: " + getCorreo() +
+                ", Genero: " + getGenero() +
+                ", Salario: " + getSalario() +
+                ", Activo: " + isActivo() +
+                ", Antiguedad: " + getAntiguedad() +
+                ']';
+    }
 }

@@ -1,6 +1,6 @@
 package excepciones;
 
-public class InvalidLengthException extends Exception{
+public class InvalidLengthException extends RuntimeException{
 
     public InvalidLengthException(String message){
         super(message);

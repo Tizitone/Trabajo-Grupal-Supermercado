@@ -11,8 +11,8 @@ public abstract class Personal extends Empleado {
         informe = "";
     }
 
-    public Personal(String nombre, int DNI, char genero, boolean activo, int antiguedad){
-        super(nombre, DNI, genero, activo, antiguedad);
+    public Personal(String nombre, int DNI, char genero, int salario, boolean activo, int antiguedad){
+        super(nombre, DNI, genero, salario, activo, antiguedad);
         productividad = 0;
         informe = "";
     }
@@ -38,6 +38,6 @@ public abstract class Personal extends Empleado {
 		return super.toString()+" | Personal [productividad=" + productividad + ", informe=" + informe + "]";
 	}
 
-  
+
 
 }

@@ -8,7 +8,7 @@ import interfaces.ISalario;
 
 import java.util.*;
 
-public class Cajero extends Personal implements ISalario{
+public class Cajero extends Personal{
 
     /*use linkedhashmap para mantener por orden de insercion las ventas, cree tambien el
     arreglo auxVentas para tener una lista de los productos vendidos y una clase venta
@@ -27,8 +27,8 @@ public class Cajero extends Personal implements ISalario{
         this.mostradorAsignado = mostrador;
     }
 
-    public Cajero(Mostrador mostrador,String nombre, int DNI, char genero, boolean activo, int antiguedad){
-        super(nombre, DNI, genero, activo, antiguedad);
+    public Cajero(Mostrador mostrador,String nombre, int DNI, char genero, int salario, boolean activo, int antiguedad){
+        super(nombre, DNI, genero, salario, activo, antiguedad);
         this.mostradorAsignado = mostrador;
     }
 
@@ -96,11 +96,9 @@ public class Cajero extends Personal implements ISalario{
 		return super.toString()+" | Cajero [auxVentas=" + auxVentas + ", mostradorAsignado=" + mostradorAsignado + "]";
 	}
 
-	@Override
-	public int calcularSalario() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    /**
+     * METODO CALCULARSALARIO MOVIDO A CLASE PADRE.
+     */
 
     /*
     public org.json.JSONObject serializar(){
