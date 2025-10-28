@@ -14,7 +14,7 @@ public abstract class Administrativo extends Empleado implements ISalario {
     }
 
     public Administrativo(String nombre, int DNI, char genero, int salario , boolean activo, int antiguedad, String correo, String contrasenia){
-        super(nombre, DNI, genero, salario, activo, antiguedad);
+        super(nombre, DNI, genero, salario , activo, antiguedad);
         this.correo = correo;
         this.contrasenia = contrasenia;
     }

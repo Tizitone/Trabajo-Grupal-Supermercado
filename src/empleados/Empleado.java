@@ -9,23 +9,24 @@ public abstract class Empleado {
 
     // Atributos
     private String nombre;
-    private int DNI; // unico y no modificable
+    private final int DNI; // unico y no modificable
     private char genero;
     private int salario; // calculado por varias caracteristicas del empleado.
     private boolean activo; // significa si esta trabajando en este momento.
     private int antiguedad; // años de trabajo.
 
+    // Constructor general de empleado nuevo
     public Empleado(String nombre, int DNI, char genero){
         this.nombre = nombre;
         this.DNI = DNI;
-        this.genero = genero;
+        this.genero = Character.toLowerCase(genero);
         salario = 0;
         activo = false;
         antiguedad = 0;
     }
 
 
-    // Este constructor probablemente se use mas que nada para probar empleados hardcodeados, no dentro del sistema.
+    // Constructor general de Empleados para ingresarlos desde archivo o pruebas hardcodeadas.
     public Empleado(String nombre, int DNI, char genero, int salario, boolean activo, int antiguedad){
         this.nombre = nombre;
         this.DNI = DNI;
@@ -103,9 +104,6 @@ public abstract class Empleado {
         return Objects.hash(getNombre(), getDNI(), getGenero());
     }
 
-    /**
-     * AÑADÍ LAS VERIFICACIONES YA HECHAS E HICE UNA PARA EL DNI
-    */
     // Verificaciones
     public boolean verificarNombre(String verificar) throws InvalidLengthException {
         if (verificar.length() > 12)

@@ -1,6 +1,5 @@
 package empleados;
 
-import interfaces.ISalario;
 import registros.CV;
 import registros.Entrevista;
 
@@ -18,8 +17,8 @@ public class Secretario extends Administrativo {
         entrevistas = new ArrayList<>();
     }
 
-    public Secretario(String nombre, int DNI, char genero, boolean activo, int antiguedad, String correo, String contrasenia){
-        super(nombre, DNI, genero, correo, contrasenia);
+    public Secretario(String nombre, int DNI, char genero, int salario, boolean activo, int antiguedad, String correo, String contrasenia){
+        super(nombre, DNI, genero, salario , activo, antiguedad, correo, contrasenia);
         curriculums = new TreeMap<>();
         entrevistas = new ArrayList<>();
     }

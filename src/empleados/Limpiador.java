@@ -19,6 +19,11 @@ public class Limpiador extends Personal implements ISalario, IRendimiento{
 		super(nombre, DNI, genero);
 		// TODO Auto-generated constructor stub
 	}
+
+	public Limpiador(String nombre, int DNI, char genero, int salario, boolean activo, int antiguedad) {
+		super(nombre, DNI, genero, salario, activo, antiguedad);
+		// TODO Auto-generated constructor stub
+	}
 	
 	public int getRendimientoActual() {
 		return rendimientoActual;
@@ -31,6 +36,7 @@ public class Limpiador extends Personal implements ISalario, IRendimiento{
 	public static void setTiendaLimpia(boolean tiendaLimpia) {
 		Limpiador.tiendaLimpia = tiendaLimpia;
 	}
+
 	//se obtiene un mostrador por parametro y se verifica la suciedad, si es mayor a 50 se puede limpiar, entonces se limpia y setea la suciedad del mostrador a 0
 	public boolean confirmarTiendaLimpiada(Mostrador m)
 	{
@@ -46,6 +52,7 @@ public class Limpiador extends Personal implements ISalario, IRendimiento{
 		
 		return seLimpio;
 	}
+
 	//selecciona una estanteria y la limpia si se puede
 	public boolean confirmarEstanteriaLimpiada(Estanteria a)
 	{
@@ -60,40 +67,42 @@ public class Limpiador extends Personal implements ISalario, IRendimiento{
 		
 		return seLimpio;
 	}
+
 	//recibe un almacenamiento y lista las estanterias sucias
-	public String listarEstanteriasSucias(Almacenamiento a)
+	public String listarEstanteriasSucias(Almacenamiento almacenamiento)
 	{
-		StringBuilder sb = new StringBuilder();
+		StringBuilder lista = new StringBuilder();
 		
-		for(Estanteria b : a.getEstanterias())
+		for(Estanteria estanteria : almacenamiento.getEstanterias())
 		{
-			if(b.verificarSuciedad())
+			if(estanteria.verificarSuciedad())
 			{
-				sb.append(b.toString()).append("\n");
+				lista.append(estanteria).append("\n");
 			}
 		}
 		
-		return sb.toString();
+		return lista.toString();
 	}
 
-	// no requiere un Override porque esta implementandolo
+	// modifique algunas cosas redundantes (variable instanciada con valor e inmediatamente sobreescrito
+	// y que la variable solo se retorna, por lo que solo use la cuenta de la variable en el retorno)
+	@Override
 	public int calcularSalario() {
-		int salarioBase = 100000, salarioTotal=0;
-		salarioTotal = (int)(salarioBase * calcularRendimiento());
-		return salarioTotal;
+		int salarioBase = 100000;
+        return (int)(salarioBase * calcularRendimiento());
 	}
 
-	// porque un porcentaje? (me explicas en llamada)
+	// porque un porcentaje? (me explicas despues)
 	//devuelve un porcentaje que sera el indice del rendimiento que tenga
+	// removi el "=0" de rendimiento total porque modifica su valor inmediatamente y agregue casteo a flotante en el retorno
 	public float calcularRendimiento() {
-		int rendimientoTotal=0;
-		rendimientoTotal = IRendimiento.rendimientoBase + rendimientoActual;
-		if(rendimientoTotal>=100)
-		{
+		int rendimientoTotal = IRendimiento.rendimientoBase + rendimientoActual;
+
+		if(rendimientoTotal>=100) {
 			rendimientoTotal=100;
 		}
 		
-		return (rendimientoTotal/100)+1;
+		return (float)(rendimientoTotal/100)+1;
 	}
 
 }
