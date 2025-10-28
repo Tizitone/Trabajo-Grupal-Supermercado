@@ -35,7 +35,16 @@ public abstract class Personal extends Empleado {
 
 	@Override
 	public String toString() {
-		return super.toString()+" | Personal [productividad=" + productividad + ", informe=" + informe + "]";
+		return  "Personal[ " +
+                " Nombre: " + getNombre() +
+                ", DNI: " + getDNI() +
+                ", Genero: " + getGenero() +
+                ", Salario: " + getSalario() +
+                ", Activo: " + isActivo() +
+                ", Antiguedad: " + getAntiguedad() +
+                ", Productividad: " + getProductividad() +
+                ", Informe: " + getInforme() +
+                "]";
 	}
 
 

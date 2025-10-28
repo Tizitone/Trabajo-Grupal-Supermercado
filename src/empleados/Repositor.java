@@ -1,7 +1,5 @@
 package empleados;
 
-
-
 import almacenamiento.Estanteria;
 import almacenamiento.Mostrador;
 import interfaces.ISalario;
@@ -30,12 +28,18 @@ public class Repositor extends Personal implements ISalario{
         return exito;
     }
 
-
-    
-
 	@Override
 	public String toString() {
-		return super.toString();
+		return "Repositor[ " +
+                " Nombre: " + getNombre() +
+                ", DNI: " + getDNI() +
+                ", Genero: " + getGenero() +
+                ", Salario: " + getSalario() +
+                ", Activo: " + isActivo() +
+                ", Antiguedad: " + getAntiguedad() +
+                ", Productividad: " + getProductividad() +
+                ", Informe: " + getInforme() +
+                "]";
 	}
 
 	@Override

@@ -1,7 +1,5 @@
 package empleados;
 
-import interfaces.ISalario;
-
 public class RRHH extends Administrativo {
 
     public RRHH(String nombre, int DNI, char genero, String correo, String contrasenia){

@@ -105,4 +105,18 @@ public class Limpiador extends Personal implements ISalario, IRendimiento{
 		return (float)(rendimientoTotal/100)+1;
 	}
 
+	@Override
+	public String toString() {
+		return "Limpiador[" +
+				" Nombre: " + getNombre() +
+				", DNI: " + getDNI() +
+				", Genero: " + getGenero() +
+				", Salario: " + getSalario() +
+				", Activo: " + isActivo() +
+				", Antiguedad: " + getAntiguedad() +
+				", Productividad: " + getProductividad() +
+				", Informe: " + getInforme() +
+				", Rendimiento :" + getRendimientoActual() +
+				']';
+	}
 }

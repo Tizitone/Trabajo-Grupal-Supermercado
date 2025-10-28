@@ -93,12 +93,19 @@ public class Cajero extends Personal{
    
 	@Override
 	public String toString() {
-		return super.toString()+" | Cajero [auxVentas=" + auxVentas + ", mostradorAsignado=" + mostradorAsignado + "]";
+		return "Cajero[" +
+                " Nombre: " + getNombre() +
+                ", DNI: " + getDNI() +
+                ", Genero: " + getGenero() +
+                ", Salario: " + getSalario() +
+                ", Activo: " + isActivo() +
+                ", Antiguedad: " + getAntiguedad() +
+                ", Productividad: " + getProductividad() +
+                ", Informe: " + getInforme() +
+                ", AuxVentas: " + auxVentas +
+                ", MostradorAsignado: " + mostradorAsignado +
+                "]";
 	}
-
-    /**
-     * METODO CALCULARSALARIO MOVIDO A CLASE PADRE.
-     */
 
     /*
     public org.json.JSONObject serializar(){
