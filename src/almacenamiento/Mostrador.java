@@ -71,6 +71,7 @@ public class Mostrador implements IEnsuciable{
         if(p.getCantEnVenta()>cant)
         {
             p.setCantEnVenta(p.getCantEnVenta()-cant);
+			 p.setVendidos(p.getVendidos()+cant);
             exito = true;
             calcularIndiceSuciedad();
         }
