@@ -10,7 +10,7 @@ public class Producto implements Comparable<Producto>{
     private double precioUnitario, peso;
     private int stock;
     private ETipoMedida medida;
-    private int cantEnVenta;
+    private int cantEnVenta, vendidos;
 
     public Producto() {
         this.id = UUID.randomUUID();
@@ -21,6 +21,7 @@ public class Producto implements Comparable<Producto>{
         this.peso = 0;
         this.stock = 0;
         this.cantEnVenta=0;
+		this.vendidos = 0;
     }
 
     public Producto(String nombre,String marca,ETipoMedida medida,double peso, String descripcionAdicional ,double precioUnitario, int stock) {
@@ -32,6 +33,7 @@ public class Producto implements Comparable<Producto>{
         this.peso = peso;
         this.stock = stock;
         this.cantEnVenta=0;
+		this.vendidos = 0;
     }
 
     public String getNombre() {
@@ -104,6 +106,14 @@ public class Producto implements Comparable<Producto>{
 
     public void setCantEnVenta(int cantEnVenta) {
         this.cantEnVenta = cantEnVenta;
+    }
+
+	public int getVendidos() {
+        return vendidos;
+    }
+
+    public void setVendidos(int vendidos) {
+        this.vendidos = vendidos;
     }
 
     @Override
