@@ -14,13 +14,18 @@ public class Cajero extends Personal{
     arreglo auxVentas para tener una lista de los productos vendidos y una clase venta
     para mantener registrado la fecha actual en la que se realizo la venta
     */
-    private static LinkedHashMap<Venta, ArrayList<Producto>> ventas = new LinkedHashMap<>();
-    private ArrayList<Producto>auxVentas = new ArrayList<>();
+    private static final LinkedHashMap<Venta, ArrayList<Producto>> ventas = new LinkedHashMap<>();
+    private final ArrayList<Producto>auxVentas = new ArrayList<>();
 
     //cada cajero tendra un mostrador asignado, que puede ser equivalente a una tienda
     //por ejemplo tengo 2 tiendas separadas, cada una tendra un mostrador con articulos que
     //se repondran segun correspondan
     private Mostrador mostradorAsignado;
+
+    public Cajero(){
+        super("", 0, 'n');
+        this.mostradorAsignado = null;
+    }
 
     public Cajero(Mostrador mostrador,String nombre, int DNI, char genero){
         super(nombre, DNI, genero);
@@ -30,6 +35,10 @@ public class Cajero extends Personal{
     public Cajero(Mostrador mostrador,String nombre, int DNI, char genero, int salario, boolean activo, int antiguedad){
         super(nombre, DNI, genero, salario, activo, antiguedad);
         this.mostradorAsignado = mostrador;
+    }
+
+    public static LinkedHashMap<Venta, ArrayList<Producto>> getVentas() {
+        return ventas;
     }
 
     //funcion que recibira por parametro una id y una cantidad, seria como registrar un codigo de barras y una cantidad
@@ -60,7 +69,10 @@ public class Cajero extends Personal{
 
         return sb.toString();
     }
+    public String listarVentas(){
 
+        return ventas.toString();
+    }
 
     public void atenderMiembro(Cliente cliente){
         cliente.setTotalCompra(cliente.getTotalCompra() - cliente.getDescuento());
