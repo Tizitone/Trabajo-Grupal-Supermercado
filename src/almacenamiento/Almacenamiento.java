@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 
-public class Almacenamiento {
+import interfaces.IGestionable;
+
+public class Almacenamiento implements IGestionable<String>{
     private final UUID id;
     private ArrayList<Estanteria>estanterias;
     private int capacidadEstanterias;
@@ -97,4 +99,8 @@ public class Almacenamiento {
                 ", capacidadEstanterias=" + capacidadEstanterias +
                 '}';
     }
+	@Override
+	public String getIdentificador() {
+		return getId().toString();
+	}
 }

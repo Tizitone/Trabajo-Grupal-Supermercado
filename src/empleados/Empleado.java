@@ -1,13 +1,13 @@
 package empleados;
 
-import excepciones.InvalidIDException;
+import excepciones.InvalidDNIException;
 import excepciones.InvalidLengthException;
 
 import java.util.Objects;
 
 public abstract class Empleado {
 
-    // Atributos
+	// Atributos
     private String nombre;
     private final int DNI; // unico y no modificable
     private char genero;
@@ -119,11 +119,11 @@ public abstract class Empleado {
         return true;
     }
 
-    public boolean verificarDNI() throws InvalidIDException {
+    public boolean verificarDNI() throws InvalidDNIException {
         if (getDNI() >= 60000000 && getDNI() <= 69999999)
-            throw new InvalidIDException("El numero del DNI coincide con los reservados para CUIT y CUIL extranjero.");
+            throw new InvalidDNIException("El numero del DNI coincide con los reservados para CUIT y CUIL extranjero.");
         if (getDNI() < 10000000)
-            throw new InvalidIDException("El numero del DNI es demasiado pequeño como para ser de una edad valida.");
+            throw new InvalidDNIException("El numero del DNI es demasiado pequeño como para ser de una edad valida.");
         return true;
     }
 

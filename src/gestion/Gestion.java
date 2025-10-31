@@ -1,71 +1,76 @@
 package gestion;
 
-import almacenamiento.Almacenamiento;
 import almacenamiento.Producto;
-import empleados.Administrativo;
 import empleados.Cajero;
-import empleados.Personal;
+import interfaces.IGestionable;
 import registros.Venta;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Map;
 
-public class Gestion {
-    private LocalDate dia;
+public class Gestion <T extends IGestionable<?>>{ // clase generica que recibe una clase que implemente IGestionable 
+    private String dia;
     private double ctaCte;
-    HashMap<Integer, Administrativo> eAdministrativos;//dni, Personal
-    HashMap<Integer, Personal> ePersonal; //dni,Personal
-    HashMap<String, Almacenamiento> deposito;
+    LinkedHashSet<T> listaGestora;//Administrativos, Personal, Almacenamiento
+
 
     public Gestion() {
-        this.eAdministrativos = new HashMap<>();
-        this.ePersonal = new HashMap<>();
-        this.deposito = new HashMap<>();
-        this.dia = LocalDate.now();
+        this.listaGestora = new LinkedHashSet<>();
+        this.dia = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")); // inicializa el dia con el tiempo actual en un formato tipo String
         this.ctaCte = 0;
     }
 
     public Gestion(double ctaCte) {
-        this.eAdministrativos = new HashMap<>();
-        this.ePersonal = new HashMap<>();
-        this.deposito = new HashMap<>();
-        this.dia = LocalDate.now();
+        this.listaGestora = new LinkedHashSet<>();
+        this.dia = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         this.ctaCte = ctaCte;
     }
-    public void agregarAlmacenamiento(Almacenamiento a)
+    
+    public String getDia() {
+		return dia;
+	}
+
+	public double getCtaCte() {
+		return ctaCte;
+	}
+
+	public void agregar(T t)
     {
-        deposito.put(a.getId().toString(),a);
+        listaGestora.add(t);
     }
-    public boolean removerAlmacenamiento(String id)
+    public boolean removerPorIdentificador(String id)
     {
-        boolean exito = false;
-        Iterator<Map.Entry<String,Almacenamiento>> it = deposito.entrySet().iterator();
+        Iterator<T> it = listaGestora.iterator();
         while (it.hasNext())
         {
-            Map.Entry<String,Almacenamiento> hm = it.next();
-            if(id.equals(hm.getKey()))
+            T hm = it.next();
+            if(id.equals(hm.getIdentificador()))
             {
                 it.remove();
-                exito = true;
+                return true;
             }
         }
-
-        return exito;
+        return false;
     }
     public String listarAlmacenamiento()
     {
         StringBuilder sb = new StringBuilder();
 
-        for (Map.Entry<String,Almacenamiento> entry : deposito.entrySet())
+        Iterator<T> it = listaGestora.iterator();
+        while (it.hasNext())
         {
-            sb.append(entry.toString()).append("\n");
+            T hm = it.next();
+            
+            sb.append(hm.toString()).append("\n");
         }
-
         return sb.toString();
     }
+    
+    
     public double verGanancias()
     {
         double ganancias = 0;
@@ -77,63 +82,6 @@ public class Gestion {
             }
         }
         return ganancias;
-    }
-
-    public void agregarPersonal(Personal p)
-    {
-        ePersonal.put(p.getDNI(),p);
-    }
-    public void removerPersonal(String dni)
-    {
-        boolean exito = false;
-        Iterator<Map.Entry<Integer,Personal>> it = ePersonal.entrySet().iterator();
-        while (it.hasNext())
-        {
-            Map.Entry<Integer,Personal> hm = it.next();
-            if(dni.equals(hm.getKey().toString()))
-            {
-                it.remove();
-                exito = true;
-            }
-        }
-    }
-    public String listarPersonal()
-    {
-        StringBuilder sb = new StringBuilder();
-        for (Map.Entry<Integer, Personal> entry : ePersonal.entrySet())
-        {
-            sb.append(entry.toString()).append("\n");
-        }
-
-        return sb.toString();
-    }
-    public void agregarAdministrativos(Administrativo a)
-    {
-        eAdministrativos.put(a.getDNI(),a);
-    }
-    public void removerAdministrativo(String dni)
-    {
-        boolean exito = false;
-        Iterator<Map.Entry<Integer,Administrativo>> it = eAdministrativos.entrySet().iterator();
-        while (it.hasNext())
-        {
-            Map.Entry<Integer,Administrativo> hm = it.next();
-            if(dni.equals(hm.getKey().toString()))
-            {
-                it.remove();
-                exito = true;
-            }
-        }
-    }
-    public String listarAdministrativos()
-    {
-        StringBuilder sb = new StringBuilder();
-        for (Map.Entry<Integer, Administrativo> entry : eAdministrativos.entrySet())
-        {
-            sb.append(entry.toString()).append("\n");
-        }
-
-        return sb.toString();
     }
 
 }

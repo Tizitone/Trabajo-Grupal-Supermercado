@@ -44,5 +44,10 @@ public class Repositor extends Personal implements ISalario{
 		return 0;
 	}
 
+	@Override
+	public Integer getIdentificador() {
+		return getDNI();
+	}
+
 }
 

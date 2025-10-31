@@ -1,6 +1,8 @@
 package empleados;
 
-public abstract class Personal extends Empleado {
+import interfaces.IGestionable;
+
+public abstract class Personal extends Empleado implements IGestionable<Integer>{
 
     private int productividad;
     private String informe;

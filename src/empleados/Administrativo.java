@@ -1,8 +1,9 @@
 package empleados;
 
+import interfaces.IGestionable;
 import interfaces.ISalario;
 
-public abstract class Administrativo extends Empleado implements ISalario {
+public abstract class Administrativo extends Empleado implements ISalario, IGestionable <Integer>{
 
     protected String correo;
     protected String contrasenia;

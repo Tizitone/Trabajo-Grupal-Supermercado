@@ -1,7 +1,5 @@
 package empleados;
 
-import interfaces.ISalario;
-
 public class RRHH extends Administrativo {
 
     public RRHH(String nombre, int DNI, char genero, String correo, String contrasenia){
@@ -14,18 +12,16 @@ public class RRHH extends Administrativo {
 
     @Override
     public String toString() {
-        return "RRHH[ " +
-                " Nombre: " + getNombre() +
-                ", DNI: " + getDNI() +
-                ", Correo: " + getCorreo() +
-                ", Genero: " + getGenero() +
-                ", Salario: " + getSalario() +
-                ", Activo: " + isActivo() +
-                ", Antiguedad: " + getAntiguedad() +
-                ']';
+        return super.toString(); // con super toString llamas al toString de empleados, que devuelven su dni,nombre,etc
     }
 
     public void darAumento(Empleado empleado, int aumento){
-        empleado.setSalario(getSalario() + getSalario() * aumento /100);
+        empleado.setSalario(empleado.getSalario() + empleado.getSalario() * aumento /100);
     }
+
+	@Override
+	public Integer getIdentificador() {
+		// TODO Auto-generated method stub
+		return getDNI();
+	}
 }

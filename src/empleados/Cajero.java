@@ -4,8 +4,6 @@ import almacenamiento.Mostrador;
 import almacenamiento.Producto;
 import registros.Venta;
 import clientes.Cliente;
-import interfaces.ISalario;
-
 import java.util.*;
 
 public class Cajero extends Personal{
@@ -41,7 +39,13 @@ public class Cajero extends Personal{
         return ventas;
     }
 
-    //funcion que recibira por parametro una id y una cantidad, seria como registrar un codigo de barras y una cantidad
+    /**
+     * funcion que recibira por parametro una id y una cantidad, seria como registrar un codigo de barras y una cantidad
+     * añade productos a una lista aux para luego usar la funcion registrar compras
+     * @param id del producto
+     * @param cant cantidad a vender
+     * @return true si no hubo problemas
+     */
     public boolean venderProducto(String id, int cant)
     {
         boolean exito = false;
@@ -53,7 +57,11 @@ public class Cajero extends Personal{
 
         return exito; // devuelve true si no hubo problemas
     }
-    //metodo para registrar las compras de un cliente,y devuelve un string como si fuera un ticket
+    /**
+     * metodo para registrar las compras de un cliente,y devuelve un string como si fuera un ticket
+     * @param idProducto
+     * @return El String de la venta
+     */
     public String registrarCompras(String idProducto)
     {
         StringBuilder sb = new StringBuilder();
@@ -108,14 +116,14 @@ public class Cajero extends Personal{
 		return super.toString()+" | Cajero [auxVentas=" + auxVentas + ", mostradorAsignado=" + mostradorAsignado + "]";
 	}
 
-    /**
-     * METODO CALCULARSALARIO MOVIDO A CLASE PADRE.
-     */
+	@Override
+	public Integer getIdentificador() {
+		return getDNI();
+	}
 
     /*
     public org.json.JSONObject serializar(){
 
     }
-
      */
 }

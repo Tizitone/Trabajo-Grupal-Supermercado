@@ -24,8 +24,8 @@ public class CV implements Comparable<CV> {
         this.telefono = telefono;
         this.correo = correo;
         this.genero = Character.toLowerCase(genero);
-        Au_ID = contador;
-        contador++;
+        this.contador = Au_ID;
+        Au_ID++;
     }
 
     // Getters y Setters
@@ -53,9 +53,6 @@ public class CV implements Comparable<CV> {
         return correo;
     }
 
-    public int getAu_ID() {
-        return Au_ID;
-    }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -80,8 +77,13 @@ public class CV implements Comparable<CV> {
     public void setTelefono(long telefono) {
         this.telefono = telefono;
     }
+    
 
-    // Verificaciones
+    public int getContador() {
+		return contador;
+	}
+
+	// Verificaciones
     public boolean verificarNombreYApellido(String verificar) throws InvalidLengthException {
         if (verificar.length() > 12)
             throw new InvalidLengthException("El nombre excede el limite de caracteres (12).");
@@ -121,7 +123,7 @@ public class CV implements Comparable<CV> {
 
     @Override
     public int compareTo(CV o) {
-        return Au_ID - o.getAu_ID();
+        return contador - o.getContador();
     }
 
     @Override
