@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public abstract class Empleado {
 
-	// Atributos
+    // Atributos
     private String nombre;
     private final int DNI; // unico y no modificable
     private char genero;
@@ -30,7 +30,7 @@ public abstract class Empleado {
     public Empleado(String nombre, int DNI, char genero, int salario, boolean activo, int antiguedad){
         this.nombre = nombre;
         this.DNI = DNI;
-        this.genero = genero;
+        this.genero = Character.toLowerCase(genero);
         this.salario = salario;
         this.activo = activo;
         this.antiguedad = antiguedad;
@@ -82,14 +82,12 @@ public abstract class Empleado {
 
     @Override
     public String toString() {
-        return "Empleado[ " +
-                " Nombre: " + getNombre() +
+        return  " Nombre: " + getNombre() +
                 ", DNI: " + getDNI() +
-                ", Genero: " + getDNI() +
-                ", Salario: " + getGenero() +
+                ", Genero: " + getGenero() +
+                ", Salario: " + getSalario() +
                 ", Activo: " + isActivo() +
-                ", Antiguedad: " + getAntiguedad() +
-                ']';
+                ", Antiguedad: " + getAntiguedad();
     }
 
     @Override

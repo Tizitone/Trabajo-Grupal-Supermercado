@@ -31,23 +31,22 @@ public class Repositor extends Personal implements ISalario{
     }
 
 
-    
 
-	@Override
-	public String toString() {
-		return super.toString();
-	}
 
-	@Override
-	public int calcularSalario() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 
-	@Override
-	public Integer getIdentificador() {
-		return getDNI();
-	}
+    @Override
+    public int calcularSalario() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public Integer getIdentificador() {
+        return getDNI();
+    }
 
 }
-

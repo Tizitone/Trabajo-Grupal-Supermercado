@@ -12,9 +12,9 @@ public class Limpiador extends Personal implements ISalario, IRendimiento{
 	private static boolean tiendaLimpia = false;
 	//cada uno tendra una variable para sumarle o restarle valor al rendimiento actual que tengan
 	private int rendimientoActual;
-	
-	
-	
+
+
+
 	public Limpiador(String nombre, int DNI, char genero) {
 		super(nombre, DNI, genero);
 		// TODO Auto-generated constructor stub
@@ -24,55 +24,68 @@ public class Limpiador extends Personal implements ISalario, IRendimiento{
 		super(nombre, DNI, genero, salario, activo, antiguedad);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public int getRendimientoActual() {
 		return rendimientoActual;
 	}
-	
+
 	public static boolean isTiendaLimpia() {
 		return tiendaLimpia;
 	}
-	
+
 	public static void setTiendaLimpia(boolean tiendaLimpia) {
 		Limpiador.tiendaLimpia = tiendaLimpia;
 	}
 
-	//se obtiene un mostrador por parametro y se verifica la suciedad, si es mayor a 50 se puede limpiar, entonces se limpia y setea la suciedad del mostrador a 0
-	public boolean confirmarTiendaLimpiada(Mostrador m)
+	// TODO: aca modifique la variable seLimpio para que sea un retorno directo, fijate si te parece y lo cambio tmb abajo, creo que hace mas legible el codigo.
+	/**
+	 * Se obtiene un mostrador por parametro y se verifica su suciedad, si es mayor a 50% se limpia y setea la suciedad del mostrador a 0.
+	 *
+	 * @param mostrador el mostrador seleccionado para confirmar.
+	 * @return {@code true} si se limpió la tienda {@code false} de lo contrario.
+	 */
+	public boolean confirmarTiendaLimpiada(Mostrador mostrador)
 	{
-		boolean seLimpio=false;
-		
-		if(m.getSuciedad()>50)
-		{
+		if(mostrador.getSuciedad()>50) {
 			Limpiador.setTiendaLimpia(true);
 			this.rendimientoActual+=18;
-			seLimpio = true;
-			m.setSuciedad(0);
+			mostrador.setSuciedad(0);
+			return true;
 		}
-		
-		return seLimpio;
+		return false;
 	}
 
-	//selecciona una estanteria y la limpia si se puede
-	public boolean confirmarEstanteriaLimpiada(Estanteria a)
+	// TODO: creo que la variable seLimpio se puede cambiar por un retorno directo si se limpio o no.
+	/**
+	 * Selecciona una estanteria y la limpia si se puede.
+	 *
+	 * @param estanteria la estanteria seleccionada de la tienda.
+	 * @return {@code true} si se limpio la estanteria, {@code false} si no.
+	 */
+	public boolean confirmarEstanteriaLimpiada(Estanteria estanteria)
 	{
 		boolean seLimpio=false;
-		
-		if(a.verificarSuciedad())
+
+		if(estanteria.verificarSuciedad())
 		{
 			this.rendimientoActual+=4;
 			seLimpio = true;
-			a.setSuciedad(0);
+			estanteria.setSuciedad(0);
 		}
-		
+
 		return seLimpio;
 	}
 
-	//recibe un almacenamiento y lista las estanterias sucias
+	/**
+	 * Recibe un almacenamiento y lista las estanterías sucias
+	 *
+	 * @param almacenamiento el almacenamiento de la tienda
+	 * @return String lista de estanterias sucias.
+	 */
 	public String listarEstanteriasSucias(Almacenamiento almacenamiento)
 	{
 		StringBuilder lista = new StringBuilder();
-		
+
 		for(Estanteria estanteria : almacenamiento.getEstanterias())
 		{
 			if(estanteria.verificarSuciedad())
@@ -80,7 +93,7 @@ public class Limpiador extends Personal implements ISalario, IRendimiento{
 				lista.append(estanteria).append("\n");
 			}
 		}
-		
+
 		return lista.toString();
 	}
 
@@ -89,7 +102,7 @@ public class Limpiador extends Personal implements ISalario, IRendimiento{
 	@Override
 	public int calcularSalario() {
 		int salarioBase = 100000;
-        return (int)(salarioBase * calcularRendimiento());
+		return (int)(salarioBase * calcularRendimiento());
 	}
 
 	// porque un porcentaje? (me explicas despues)
@@ -101,8 +114,12 @@ public class Limpiador extends Personal implements ISalario, IRendimiento{
 		if(rendimientoTotal>=100) {
 			rendimientoTotal=100;
 		}
-		
+
 		return (float)(rendimientoTotal/100)+1;
 	}
 
+	@Override
+	public Integer getIdentificador() {
+		return 0;
+	}
 }
