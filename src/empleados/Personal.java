@@ -42,6 +42,7 @@ public abstract class Personal extends Empleado implements IGestionable<Integer>
     @Override
     public String toString() {
         return super.toString()+", Productividad: " + getProductividad() + ", Informe: " + getInforme();
+       
     }
 
 

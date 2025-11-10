@@ -8,6 +8,7 @@ import registros.Entrevista;
 public class RRHH extends Administrativo {
 
 	private LinkedHashMap<Integer,Entrevista> entrevistasAgendadas;
+
     /**
      * Construye un nuevo empleado de {@code RRHH} como si fuera un nuevo empleado, pidiendo solo información obligatoria.
      *

@@ -14,8 +14,7 @@ public class Main {
 		Mostrador comp = new Mostrador();
 		Cajero test3 = new Cajero(comp, "Juan", 32685938, 'h', 127000, true, 5);
 		Limpiador test4 = new Limpiador("Carla", 44575848, 'm', 57000, true, 3);
-		Repositor test5 = new Repositor("juanita", 36888888, 'm', 32000, true, 5);
-		
+		Repositor test5 = new Repositor("juanita", 36888888, 'm', 32000, true, 5);	
 		CV cv = new CV("Raul", "Perez", 24, "2236837702", "raulperez@gmail.com", 'h');
 		Entrevista e = new Entrevista(9, 12, 2026, 15, 30, cv, "");
 		CV cv2 = new CV("Mario", "Rodriguez", 23, "2236837702", "marioRodriguez@gmail.com", 'h');
@@ -34,5 +33,12 @@ public class Main {
 		System.out.println(test3.toString());
 		System.out.println(test4.toString());
 		System.out.println(test5.toString());
+
+		System.out.println(test1.toString() + "\n");
+		System.out.println(test2.toString() + "\n");
+		System.out.println(test3.toString() + "\n");
+		System.out.println(test4.toString() + "\n");
+		System.out.println(test5.toString() + "\n");
+
 	}
 }
