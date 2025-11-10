@@ -4,9 +4,10 @@ package empleados;
 
 import almacenamiento.Estanteria;
 import almacenamiento.Mostrador;
+import interfaces.IRendimiento;
 import interfaces.ISalario;
 
-public class Repositor extends Personal implements ISalario{
+public class Repositor extends Personal implements ISalario, IRendimiento{
 
     public Repositor(String nombre, int DNI, char genero){
         super(nombre, DNI, genero);
@@ -26,27 +27,37 @@ public class Repositor extends Personal implements ISalario{
         boolean exito;
 
         exito = mostrador.agregarArticulos(estanteria.venderProductos(id,cant));// mostrador devuelve un booleano si se pudo agregar, y venderProductos devuelve un producto si todavia hay la cantidad que se solicita
-
+        setProductividad(getProductividad() + 1 );
         return exito;
     }
-
-
-
 
     @Override
     public String toString() {
         return "Repositor ["+super.toString()+"]";
     }
 
+    /**
+     * Calcula el salario que recibe este empleado según su rendimiento.
+     * @return {@code int} representando el sueldo del empleado.
+     */
     @Override
     public int calcularSalario() {
-        // TODO Auto-generated method stub
-        return 0;
+        return (int) (getSalario() + calcularRendimiento());
+    }
+
+    /**
+     * Calcula el rendimiento del empleado para calcular su salario.
+     * @return {@code float} representando el rendimiento que tuvo el empleado.
+     */
+    @Override
+    public float calcularRendimiento() {
+        return 1000 * getProductividad();
     }
 
     @Override
     public Integer getIdentificador() {
         return getDNI();
     }
+
 
 }

@@ -2,11 +2,13 @@ package empleados;
 
 import almacenamiento.Mostrador;
 import almacenamiento.Producto;
+import interfaces.IRendimiento;
+import interfaces.ISalario;
 import registros.Venta;
 import clientes.Cliente;
 import java.util.*;
 
-public class Cajero extends Personal{
+public class Cajero extends Personal implements ISalario, IRendimiento {
 
     /*use linkedhashmap para mantener por orden de insercion las ventas, cree tambien el
     arreglo auxVentas para tener una lista de los productos vendidos y una clase venta
@@ -55,9 +57,12 @@ public class Cajero extends Personal{
         this.mostradorAsignado = mostrador;
     }
 
+    // getters y setters
     public static LinkedHashMap<Venta, ArrayList<Producto>> getVentas() {
         return ventas;
     }
+
+    // metodos
 
     /**
      * Función que recibe por parámetro un ID y una cantidad, sería como registrar un código de barras
@@ -102,7 +107,6 @@ public class Cajero extends Personal{
     }
 
     public String listarVentas(){
-
         return ventas.toString();
     }
 
@@ -145,9 +149,21 @@ public class Cajero extends Personal{
 		return getDNI();
 	}
 
-    /*
-    public org.json.JSONObject serializar(){
-
-    }
+    /**
+     * Calcula el salario que recibe este empleado según su rendimiento.
+     * @return {@code int} representando el sueldo del empleado.
      */
+    @Override
+    public int calcularSalario() {
+        return (int) (getSalario() + calcularRendimiento());
+    }
+
+    /**
+     * Calcula el rendimiento del empleado para calcular su salario.
+     * @return {@code float} representando el rendimiento que tuvo el empleado.
+     */
+    @Override
+    public float calcularRendimiento() {
+        return 1000 * getProductividad();
+    }
 }

@@ -9,13 +9,19 @@ public abstract class Empleado {
 
     // Atributos
     private String nombre;
-    private final int DNI; // unico y no modificable
-    private char genero;
-    private int salario; // calculado por varias caracteristicas del empleado.
-    private boolean activo; // significa si esta trabajando en este momento.
+    private final int DNI; // unico y no modificable.
+    private char genero; // (m)ujer, (h)ombre u (o)tros
+    private int salario;
+    private boolean activo; // significa si está trabajando en este momento.
     private int antiguedad; // años de trabajo.
 
-    // Constructor general de empleado nuevo
+    /**
+     * Constructor de empleado general como si fuera un nuevo empleado
+     *
+     * @param nombre Nombre del empleado.
+     * @param DNI DNI único del empleado.
+     * @param genero Género del empleado.
+     */
     public Empleado(String nombre, int DNI, char genero){
         this.nombre = nombre;
         this.DNI = DNI;
@@ -26,7 +32,16 @@ public abstract class Empleado {
     }
 
 
-    // Constructor general de Empleados para ingresarlos desde archivo o pruebas hardcodeadas.
+    /**
+     * Constructor de empleado general para cuando lo ingresemos por JSON
+     *
+     * @param nombre Nombre del empleado.
+     * @param DNI DNI unico del empleado.
+     * @param genero Género del empleado.
+     * @param salario Salario del empleado.
+     * @param activo Si esta trabajando o no.
+     * @param antiguedad Cuantos años lleva con nosotros el empleado.
+     */
     public Empleado(String nombre, int DNI, char genero, int salario, boolean activo, int antiguedad){
         this.nombre = nombre;
         this.DNI = DNI;
@@ -103,29 +118,35 @@ public abstract class Empleado {
     }
 
     // Verificaciones
-    public boolean verificarNombre(String verificar) throws InvalidLengthException {
+    public boolean verificarNombre(String verificar){
         if (verificar.length() > 12)
-            throw new InvalidLengthException("El nombre excede el limite de caracteres (12).");
+            throw new InvalidLengthException("\u001B[31mEl nombre excede el limite de caracteres (12).\u001B[0m");
+        if (verificar.length() < 3)
+            throw new InvalidLengthException("\u001B[31mEl nombre es demasiado corto, debe superar los 3 caracteres.\u001B[0m");
+        return true;
+    }
+
+    public boolean verificarGenero(char verificar){
+        try{
+            if (verificar != 'h' && verificar != 'm' && verificar != 'o')
+                throw new IllegalArgumentException("\u001B[31mEl valor ingresado no coincide a una de las opciones posibles.\u001B[0m");
+        } catch (IllegalArgumentException iae) {
+            System.out.println(iae.getMessage());
+        }
 
         return true;
     }
 
-    public boolean verificarGenero(char verificar) throws IllegalArgumentException{
-        if (verificar != 'h' && verificar != 'm' && verificar != 'o')
-            throw new IllegalArgumentException("El valor ingresado no coincide a una de las opciones posibles");
+    public boolean verificarDNI(){
+        try{
+            if (getDNI() >= 60000000 && getDNI() <= 69999999)
+                throw new InvalidDNIException("\u001B[31mEl numero del DNI coincide con los reservados para CUIT y CUIL extranjero.\u001B[0m");
+            if (getDNI() < 10000000)
+                throw new InvalidDNIException("\u001B[31mEl numero del DNI es demasiado pequeño como para ser de una edad valida.\u001B[0m");
+        }catch (InvalidDNIException idnie){
+            System.out.println(idnie.getMessage());
+        }
 
         return true;
     }
-
-    public boolean verificarDNI() throws InvalidDNIException {
-        if (getDNI() >= 60000000 && getDNI() <= 69999999)
-            throw new InvalidDNIException("El numero del DNI coincide con los reservados para CUIT y CUIL extranjero.");
-        if (getDNI() < 10000000)
-            throw new InvalidDNIException("El numero del DNI es demasiado pequeño como para ser de una edad valida.");
-        return true;
-    }
-
-
-
-
 }

@@ -1,9 +1,16 @@
 package clientes;
 
+import java.util.UUID;
+
 public class TarjetaMembresia {
 
     protected String codigo;
     protected Membresia membresia;
+
+    public TarjetaMembresia(Membresia membresia){
+        codigo = UUID.randomUUID().toString();
+        this.membresia = membresia;
+    }
 
     public enum Membresia{
         cobre(0.05),

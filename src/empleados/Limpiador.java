@@ -97,17 +97,26 @@ public class Limpiador extends Personal implements ISalario, IRendimiento{
 		return lista.toString();
 	}
 
-	// modifique algunas cosas redundantes (variable instanciada con valor e inmediatamente sobreescrito
-	// y que la variable solo se retorna, por lo que solo use la cuenta de la variable en el retorno)
+	// Cambie salario base por el atributo salario, si queres que este tipo de empleado
+	// especifico tenga un mismo salario base lo podemos implementar en el constructor.
+
+	/**
+	 * Calcula el salario que recibe este empleado según su rendimiento.
+	 * @return sueldo del empleado.
+	 */
 	@Override
 	public int calcularSalario() {
-		int salarioBase = 100000;
-		return (int)(salarioBase * calcularRendimiento());
+		return (int)(getSalario() * calcularRendimiento());
 	}
 
-	// porque un porcentaje? (me explicas despues)
-	//devuelve un porcentaje que sera el indice del rendimiento que tenga
+	// porque un porcentaje?
+	// devuelve un porcentaje que sera el indice del rendimiento que tenga
 	// removi el "=0" de rendimiento total porque modifica su valor inmediatamente y agregue casteo a flotante en el retorno
+
+	/**
+	 * Calcula el rendimiento del empleado para calcular su salario.
+	 * @return porcentaje representando el rendimiento que tuvo el empleado.
+	 */
 	public float calcularRendimiento() {
 		int rendimientoTotal = IRendimiento.rendimientoBase + rendimientoActual;
 
