@@ -4,9 +4,11 @@ import interfaces.IGestionable;
 
 public abstract class Personal extends Empleado implements IGestionable<Integer>{
 
+    // Atributos
     private int productividad;
     private String informe;
 
+    // Constructores
     public Personal(String nombre, int DNI, char genero){
         super(nombre, DNI, genero);
         productividad = 0;
@@ -19,6 +21,7 @@ public abstract class Personal extends Empleado implements IGestionable<Integer>
         informe = "";
     }
 
+    // Getters y Setters
     public int getProductividad() {
         return productividad;
     }
@@ -35,10 +38,11 @@ public abstract class Personal extends Empleado implements IGestionable<Integer>
         this.informe = informe;
     }
 
-	@Override
-	public String toString() {
-		return super.toString()+" | Personal [productividad=" + productividad + ", informe=" + informe + "]";
-	}
+    // Metodo toString
+    @Override
+    public String toString() {
+        return super.toString()+", Productividad: " + getProductividad() + ", Informe: " + getInforme();
+    }
 
 
 

@@ -20,16 +20,36 @@ public class Cajero extends Personal{
     //se repondran segun correspondan
     private Mostrador mostradorAsignado;
 
+    // TODO: es necesario este constructor?
     public Cajero(){
         super("", 0, 'n');
         this.mostradorAsignado = null;
     }
 
+    /**
+     * Construye un nuevo {@code Cajero} como si fuera un nuevo empleado, pidiendo solo información obligatoria.
+     *
+     * @param mostrador Mostrador en el que trabaja.
+     * @param nombre Nombre del empleado.
+     * @param DNI DNI del empleado.
+     * @param genero Género del empleado.
+     */
     public Cajero(Mostrador mostrador,String nombre, int DNI, char genero){
         super(nombre, DNI, genero);
         this.mostradorAsignado = mostrador;
     }
 
+    /**
+     * Construye un nuevo {@code Cajero} como si fuera un empleado ya establecido con toda la información posible.
+     *
+     * @param mostrador Mostrador en donde trabaja.
+     * @param nombre Nombre del empleado.
+     * @param DNI DNI del empleado.
+     * @param genero Género del empleado.
+     * @param salario Salario del empleado.
+     * @param activo Si el empleado esta trabajando.
+     * @param antiguedad Cuantos años lleva trabajando con nosotros el empleado.
+     */
     public Cajero(Mostrador mostrador,String nombre, int DNI, char genero, int salario, boolean activo, int antiguedad){
         super(nombre, DNI, genero, salario, activo, antiguedad);
         this.mostradorAsignado = mostrador;
@@ -40,11 +60,12 @@ public class Cajero extends Personal{
     }
 
     /**
-     * funcion que recibira por parametro una id y una cantidad, seria como registrar un codigo de barras y una cantidad
-     * añade productos a una lista aux para luego usar la funcion registrar compras
-     * @param id del producto
-     * @param cant cantidad a vender
-     * @return true si no hubo problemas
+     * Función que recibe por parámetro un ID y una cantidad, sería como registrar un código de barras
+     * y una cantidad añade productos a una lista aux para luego usar la función registrar compras
+     *
+     * @param id Identificador del producto.
+     * @param cant Cantidad a vender.
+     * @return {@code true} si no hubo problemas.
      */
     public boolean venderProducto(String id, int cant)
     {
@@ -55,12 +76,14 @@ public class Cajero extends Personal{
             auxVentas.add(mostradorAsignado.buscarProducto(id)); //en el aux ventas registra los productos que se van a vender, buscandolos por id
         }
 
-        return exito; // devuelve true si no hubo problemas
+        return exito;
     }
+
     /**
-     * metodo para registrar las compras de un cliente,y devuelve un string como si fuera un ticket
-     * @param idProducto
-     * @return El String de la venta
+     * Registra las compras de un cliente y devuelve un string como si fuera un ticket.
+     *
+     * @param idProducto Código de los productos que compra el cliente.
+     * @return {@code String} que representa el ticket de la venta.
      */
     public String registrarCompras(String idProducto)
     {
@@ -77,6 +100,7 @@ public class Cajero extends Personal{
 
         return sb.toString();
     }
+
     public String listarVentas(){
 
         return ventas.toString();
@@ -105,15 +129,15 @@ public class Cajero extends Personal{
         return pregunta.nextBoolean();
     }
 
-    /// Modificar cuando tengamos mejor la clase gestora
+    // TODO: Modificar cuando tengamos mejor la clase gestora.
     public boolean agregarCliente(Cliente cliente){
         return true;
     }
 
-   
+
 	@Override
 	public String toString() {
-		return super.toString()+" | Cajero [auxVentas=" + auxVentas + ", mostradorAsignado=" + mostradorAsignado + "]";
+		return "Cajero[ "+super.toString()+",mostradorAsignado=" + mostradorAsignado + "]";
 	}
 
 	@Override

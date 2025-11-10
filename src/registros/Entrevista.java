@@ -2,6 +2,10 @@ package registros;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import excepciones.InvalidDateException;
 
@@ -13,6 +17,8 @@ public class Entrevista {
     protected int hora, minuto;
     protected CV curriculum;
     protected String informe;
+    protected int id;
+    protected static int AU_id=0;
 
     public Entrevista(int dia, int mes, int anio, int hora, int minuto, CV curriculum, String informe) throws InvalidDateException{
         this.fecha = fechaToString(dia,mes,anio);
@@ -24,10 +30,15 @@ public class Entrevista {
         this.minuto = minuto;
         this.curriculum = curriculum;
         this.informe = informe;
-    }
+        this.id = AU_id;
+        Entrevista.AU_id++;
+    }  
+    
+    public int getId() {
+		return id;
+	}
 
-  
-    public int getDia() {
+	public int getDia() {
 		return dia;
 	}
     
@@ -74,6 +85,79 @@ public class Entrevista {
         this.informe = informe;
     }
     
+    
+    
+    public void setFecha(String fecha) {
+		this.fecha = fecha;
+	}
+
+	public void setHorario(String horario) {
+		this.horario = horario;
+	}
+
+	public void setDia(int dia) {
+		this.dia = dia;
+	}
+
+	public void setMes(int mes) {
+		this.mes = mes;
+	}
+
+	public void setAnio(int anio) {
+		this.anio = anio;
+	}
+
+	public void setHora(int hora) {
+		this.hora = hora;
+	}
+
+	public void setMinuto(int minuto) {
+		this.minuto = minuto;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	
+
+	public JSONArray toJson()
+    {
+    	JSONObject jb = new JSONObject();
+    	JSONObject jbCv = new JSONObject();
+    	JSONArray jarrayCv = new JSONArray();
+    	JSONArray jarray = new JSONArray();
+    	
+    	jb.append("dia", getDia());
+    	jb.append("mes", getMes());
+    	jb.append("anio", getAnio());
+    	jb.append("hora", getHora());
+    	jb.append("minuto", getMinuto());
+    	
+    	jbCv.append("nombre", getCurriculum().nombre);
+    	jbCv.append("apellido", getCurriculum().apellido);
+    	jbCv.append("edad", getCurriculum().edad);
+    	jbCv.append("telefono", getCurriculum().telefono);
+    	jbCv.append("correo", getCurriculum().correo);
+    	jarrayCv.put(jbCv);
+    	
+    	jb.append("Cv", jarrayCv);
+    	
+    	jarray.put(jb);
+    	
+    	return jarray;
+    }
+    public void toObject(JSONObject jb)
+    {
+    	JSONArray jArray = jb.getJSONArray("Cv");
+    	this.setDia(jb.getInt("dia"));
+    	this.setMes(jb.getInt("mes"));
+    	this.setAnio(jb.getInt("anio"));
+    	this.setHora(jb.getInt("hora"));
+    	this.setMinuto(jb.getInt("minuto"));
+    	
+    }
+    
     public String fechaToString(int dia,int mes,int anio) throws InvalidDateException
     {
     	StringBuilder sb = new StringBuilder();
@@ -91,13 +175,11 @@ public class Entrevista {
     	}
     	try
     	{
-    		LocalDate.of(anio, mes, dia);
+    		sb.append(LocalDate.of(anio, mes, dia).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
     	}catch(DateTimeException  o)
     	{
     		throw new InvalidDateException("La fecha ingresada no existe realmente.");
     	}
-    	
-    	sb.append(dia).append("/").append(mes).append("/").append(anio);
     	
     	return sb.toString();
     }
@@ -108,13 +190,13 @@ public class Entrevista {
             throw new InvalidDateException("La hora ingresada no es válida (debe estar entre 0 y 23)");
         if (minuto < 0 || minuto > 59)
             throw new InvalidDateException("El minuto ingresado no es válido (debe estar entre 0 y 59)");
-        sb.append(hora).append(":").append(minuto);
+        sb.append(String.format("%02d", hora)).append(":").append(String.format("%02d", minuto));
         
         return sb.toString();
     }
     @Override
     public String toString() {
-        return "Entrevista dada el " + fecha + " a las " + horario +
+        return "Entrevista dada el " + getFecha() + " a las " + getHorario() +
                "\n" + curriculum.toString() +
                "\nInforme: " + informe + "\n";
     }

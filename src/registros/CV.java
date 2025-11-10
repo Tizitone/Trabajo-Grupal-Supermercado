@@ -9,14 +9,13 @@ public class CV implements Comparable<CV> {
     protected String nombre;
     protected String apellido;
     protected int edad;
-    protected long telefono;
-    protected String correo;
+    protected String correo, telefono;
     protected char genero;
     protected static int Au_ID;
     private int contador;
 
     // Constructor
-    public CV(String nombre, String apellido, int edad, long telefono, String correo, char genero) {
+    public CV(String nombre, String apellido, int edad, String telefono, String correo, char genero) {
 
         this.nombre = nombre;
         this.apellido = apellido;
@@ -41,7 +40,7 @@ public class CV implements Comparable<CV> {
         return edad;
     }
 
-    public long getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
@@ -74,7 +73,7 @@ public class CV implements Comparable<CV> {
         this.genero = genero;
     }
 
-    public void setTelefono(long telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
     
@@ -131,7 +130,7 @@ public class CV implements Comparable<CV> {
         return "| Curriculum Vitae |\n" +
                 nombre + " " + apellido +
                 "\n" + edad + " años" +
-                "Genero: " + genero +
+                "\nGenero: " + genero +
                 "\ntelefono: " + telefono +
                 "\ncorreo: " + correo;
     }
