@@ -1,8 +1,13 @@
 package excepciones;
 
-public class InvalidAgeException extends Exception {
+public class InvalidAgeException extends RuntimeException {
 
-    public InvalidAgeException(String message){
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5867386226031670653L;
+
+	public InvalidAgeException(String message){
         super(message);
     }
 

@@ -1,6 +1,10 @@
 package registros;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import excepciones.InvalidAgeException;
+import excepciones.InvalidDNIException;
 import excepciones.InvalidLengthException;
 
 public class CV implements Comparable<CV> {
@@ -8,24 +12,24 @@ public class CV implements Comparable<CV> {
     // Atributos
     protected String nombre;
     protected String apellido;
-    protected int edad;
-    protected long telefono;
-    protected String correo;
+    protected int edad,dni;
+    protected String correo, telefono;
     protected char genero;
     protected static int Au_ID;
     private int contador;
 
     // Constructor
-    public CV(String nombre, String apellido, int edad, long telefono, String correo, char genero) {
+    public CV(String nombre, String apellido,int dni, int edad, String telefono, String correo, char genero) {
 
         this.nombre = nombre;
         this.apellido = apellido;
+        this.dni = dni;
         this.edad = edad;
         this.telefono = telefono;
         this.correo = correo;
         this.genero = Character.toLowerCase(genero);
-        Au_ID = contador;
-        contador++;
+        Au_ID++;
+        this.contador = Au_ID;
     }
 
     // Getters y Setters
@@ -41,7 +45,7 @@ public class CV implements Comparable<CV> {
         return edad;
     }
 
-    public long getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
@@ -53,11 +57,15 @@ public class CV implements Comparable<CV> {
         return correo;
     }
 
-    public int getAu_ID() {
-        return Au_ID;
-    }
+    public int getDni() {
+		return dni;
+	}
 
-    public void setNombre(String nombre) {
+	protected void setDni(int dni) {
+		this.dni = dni;
+	}
+
+	public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
@@ -77,14 +85,61 @@ public class CV implements Comparable<CV> {
         this.genero = genero;
     }
 
-    public void setTelefono(long telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+    
 
-    // Verificaciones
+    public int getContador() {
+		return contador;
+	}
+    
+    public JSONArray toJson()
+    {
+    	JSONArray jArray = new JSONArray();
+    	JSONObject jb = new JSONObject();
+    	
+    	jb.put("nombre", getNombre());
+    	jb.put("apellido", getApellido());
+    	jb.put("edad", getEdad());
+    	jb.put("dni", getDni());
+    	jb.put("correo", getCorreo());
+    	jb.put("genero", String.valueOf(getGenero()).charAt(0));
+    	jb.put("telefono", getTelefono());
+    	
+    	jArray.put(jb);
+    	
+    	return jArray;
+    }
+    
+    public void toObject(JSONObject jb)
+    {
+    	setNombre(jb.getString("nombre"));
+    	setApellido(jb.getString("apellido"));
+    	setEdad(jb.getInt("edad"));
+    	setDni(jb.getInt("dni"));
+    	setCorreo(jb.getString("correo"));
+    	setGenero((char)jb.getString("genero").charAt(0));
+    	setTelefono(jb.getString("telefono"));
+    }
+
+	// Verificaciones
     public boolean verificarNombreYApellido(String verificar) throws InvalidLengthException {
         if (verificar.length() > 12)
             throw new InvalidLengthException("El nombre excede el limite de caracteres (12).");
+
+        return true;
+    }
+    
+    public boolean verificarDNI(){
+        try{
+            if (getDni() >= 60000000 && getDni() <= 69999999)
+                throw new InvalidDNIException("\u001B[31mEl numero del DNI coincide con los reservados para CUIT y CUIL extranjero.\u001B[0m");
+            if (getDni() < 10000000)
+                throw new InvalidDNIException("\u001B[31mEl numero del DNI es demasiado pequeño como para ser de una edad valida.\u001B[0m");
+        }catch (InvalidDNIException idnie){
+            System.out.println(idnie.getMessage());
+        }
 
         return true;
     }
@@ -121,7 +176,7 @@ public class CV implements Comparable<CV> {
 
     @Override
     public int compareTo(CV o) {
-        return Au_ID - o.getAu_ID();
+        return contador - o.getContador();
     }
 
     @Override
@@ -129,7 +184,7 @@ public class CV implements Comparable<CV> {
         return "| Curriculum Vitae |\n" +
                 nombre + " " + apellido +
                 "\n" + edad + " años" +
-                "Genero: " + genero +
+                "\nGenero: " + genero +
                 "\ntelefono: " + telefono +
                 "\ncorreo: " + correo;
     }
