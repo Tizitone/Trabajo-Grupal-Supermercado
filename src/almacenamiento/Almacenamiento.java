@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 
-public class Almacenamiento {
+import interfaces.IGestionable;
+
+public class Almacenamiento implements IGestionable<String>{
     private final UUID id;
     private ArrayList<Estanteria>estanterias;
     private int capacidadEstanterias;
@@ -62,20 +64,19 @@ public class Almacenamiento {
     	
     	return sb.toString();
     }
-    public String buscarEstanteriaPorID(String id)
+    public Estanteria buscarEstanteriaPorID(String id)
     {
-    	StringBuilder sb = new StringBuilder();
     	UUID uuidbuscado = UUID.fromString(id);
     	
     	for(Estanteria e : estanterias)
     	{
     		if(e.getId().equals(uuidbuscado))
     		{
-    			sb.append(e.toString());
+    			return e;
     		}
     	}
     	
-    	return sb.toString();
+    	return null;
     }
 
     @Override
@@ -97,4 +98,8 @@ public class Almacenamiento {
                 ", capacidadEstanterias=" + capacidadEstanterias +
                 '}';
     }
+	@Override
+	public String getIdentificador() {
+		return getId().toString();
+	}
 }

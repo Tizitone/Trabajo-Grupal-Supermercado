@@ -2,7 +2,12 @@ package excepciones;
 
 public class InvalidIDException extends RuntimeException {
 
-    public InvalidIDException(String message) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2232430090968454327L;
+
+	public InvalidIDException(String message) {
       super(message);
     }
 

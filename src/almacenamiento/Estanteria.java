@@ -5,10 +5,13 @@ import java.util.Iterator;
 import java.util.Objects;
 import java.util.UUID;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import interfaces.IEnsuciable;
 
 public class Estanteria implements IEnsuciable{
-    private final UUID id;
+    private UUID id;
     private final ArrayList<Producto>productos;
     private int capacidadProductos;
     private int suciedad=0;
@@ -28,8 +31,12 @@ public class Estanteria implements IEnsuciable{
     public UUID getId() {
         return id;
     }
+   
+    protected void setId(UUID id) {
+		this.id = id;
+	}
 
-    public int getCapacidadProductos() {
+	public int getCapacidadProductos() {
         return capacidadProductos;
     }
 
@@ -37,9 +44,7 @@ public class Estanteria implements IEnsuciable{
         this.capacidadProductos = capacidadProductos;
     }
     
-
     //metodos
-
     public int getSuciedad() {
 		return suciedad;
 	}
@@ -119,8 +124,41 @@ public class Estanteria implements IEnsuciable{
     	
     	return sb.toString();
     }
+    public JSONObject toJson() {
+        JSONObject jb = new JSONObject();
+        JSONArray jProductos = new JSONArray();
 
+        // Convertir productos dentro de la estantería
+        for (Producto p : productos) {
+            jProductos.put(p.toJSON());
+        }
 
+        jb.put("tipo", "Estanteria"); // importante para JsonGestor
+        jb.put("id", id.toString());
+        jb.put("capacidadProductos", capacidadProductos);
+        jb.put("suciedad", suciedad);
+        jb.put("productos", jProductos);
+
+        return jb;
+    }
+    public void toObject(JSONObject jb) {
+        // ID y propiedades básicas
+        this.setId(UUID.fromString(jb.getString("id")));
+        this.capacidadProductos = jb.getInt("capacidadProductos");
+        this.suciedad = jb.getInt("suciedad");
+
+        // Limpiar productos actuales
+        this.productos.clear();
+
+        // Cargar productos
+        JSONArray jProductos = jb.getJSONArray("productos");
+        for (int i = 0; i < jProductos.length(); i++) {
+            JSONObject jProd = jProductos.getJSONObject(i);
+            Producto p = new Producto();
+            p.toObject(jProd);
+            this.productos.add(p);
+        }
+    }
     @Override
     public boolean equals(Object o) {
         if(o == this) return true;

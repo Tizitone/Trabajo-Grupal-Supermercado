@@ -9,9 +9,9 @@ import interfaces.IEnsuciable;
 
 public class Mostrador implements IEnsuciable{
 
-    private TreeMap<Producto,Integer> articulos;
+    private static TreeMap<Producto,Integer> articulos;
     private final int limiteArticulos;
-    private int suciedad=0;
+    private static int suciedad=0;
 
     public Mostrador() {
         articulos = new TreeMap<Producto,Integer>();
@@ -26,8 +26,8 @@ public class Mostrador implements IEnsuciable{
 		return suciedad;
 	}
 	
-	public void setSuciedad(int suciedad) {
-		this.suciedad = suciedad;
+	public static void setSuciedad(int suciedad) {
+		Mostrador.suciedad = suciedad;
 	}
 
 	//agrega un producto al mostrador(es decir que ese articulo se encuentra en venta)
@@ -49,7 +49,7 @@ public class Mostrador implements IEnsuciable{
         return exito;
     }
     //busca un producto por uuid
-    public Producto buscarProducto(String id)
+    public static Producto buscarProducto(String id)
     {
         for (Map.Entry<Producto,Integer> entry : articulos.entrySet())
         {
@@ -63,7 +63,7 @@ public class Mostrador implements IEnsuciable{
     }
 
     //le resta valor a la cantEnVenta de un producto
-    public boolean venderArticulo(String id,int cant)
+    public  boolean venderArticulo(String id,int cant)
     {
         boolean exito = false;
         if(buscarProducto(id)==null) return false;
@@ -71,6 +71,7 @@ public class Mostrador implements IEnsuciable{
         if(p.getCantEnVenta()>cant)
         {
             p.setCantEnVenta(p.getCantEnVenta()-cant);
+			 p.setVendidos(p.getVendidos()+cant);
             exito = true;
             calcularIndiceSuciedad();
         }
@@ -79,15 +80,15 @@ public class Mostrador implements IEnsuciable{
     }
 
 	@Override
-	public int calcularIndiceSuciedad() {
-		this.suciedad++;
-		if(this.suciedad>50)
+	public  int calcularIndiceSuciedad() {
+		Mostrador.suciedad++;
+		if(Mostrador.suciedad>50)
 		{
 			Limpiador.setTiendaLimpia(false);
 		}
 		if(suciedad>100)
 		{
-			this.suciedad=100;
+			Mostrador.suciedad=100;
 		}
 		return suciedad;
 	}
