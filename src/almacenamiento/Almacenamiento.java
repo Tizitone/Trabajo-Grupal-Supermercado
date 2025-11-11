@@ -64,20 +64,19 @@ public class Almacenamiento implements IGestionable<String>{
     	
     	return sb.toString();
     }
-    public String buscarEstanteriaPorID(String id)
+    public Estanteria buscarEstanteriaPorID(String id)
     {
-    	StringBuilder sb = new StringBuilder();
     	UUID uuidbuscado = UUID.fromString(id);
     	
     	for(Estanteria e : estanterias)
     	{
     		if(e.getId().equals(uuidbuscado))
     		{
-    			sb.append(e.toString());
+    			return e;
     		}
     	}
     	
-    	return sb.toString();
+    	return null;
     }
 
     @Override

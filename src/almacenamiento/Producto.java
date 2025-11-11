@@ -4,8 +4,10 @@ import enumerators.ETipoMedida;
 import java.util.Objects;
 import java.util.UUID;
 
+import org.json.JSONObject;
+
 public class Producto implements Comparable<Producto>{
-    private final UUID id;
+    private UUID id;
     private String nombre,marca,descripcionAdicional;
     private double precioUnitario, peso;
     private int stock;
@@ -79,8 +81,12 @@ public class Producto implements Comparable<Producto>{
 	public UUID getId() {
         return id;
     }
+	
+    protected void setId(UUID id) {
+		this.id = id;
+	}
 
-    public double getPrecioUnitario() {
+	public double getPrecioUnitario() {
         return precioUnitario;
     }
 
@@ -116,6 +122,48 @@ public class Producto implements Comparable<Producto>{
         this.vendidos = vendidos;
     }
 
+    public JSONObject toJSON() {
+        JSONObject jb = new JSONObject();
+        jb.put("id", id.toString());
+        jb.put("nombre", nombre);
+        jb.put("marca", marca);
+        jb.put("descripcionAdicional", descripcionAdicional);
+        jb.put("precioUnitario", precioUnitario);
+        jb.put("peso", peso);
+        jb.put("stock", stock);
+        jb.put("medida", medida.name());
+        jb.put("cantEnVenta", cantEnVenta);
+        jb.put("vendidos", vendidos);
+        return jb;
+    }
+    public Producto toObject(JSONObject jb) {
+        Producto p = new Producto();
+
+        // Asignar ID
+        p.setId(UUID.fromString(jb.getString("id")));
+
+        // Asignar atributos básicos
+        p.setNombre(jb.getString("nombre"));
+        p.setMarca(jb.getString("marca"));
+        p.setDescripcionAdicional(jb.getString("descripcionAdicional"));
+        p.setPrecioUnitario(jb.getDouble("precioUnitario"));
+        p.setPeso(jb.getDouble("peso"));
+        p.setStock(jb.getInt("stock"));
+        p.setCantEnVenta(jb.getInt("cantEnVenta"));
+        p.setVendidos(jb.getInt("vendidos"));
+
+        // Enum ETipoMedida
+        String medidaStr = jb.getString("medida");
+        if (medidaStr != null && !medidaStr.equals("null")) {
+            try {
+                p.setMedida(ETipoMedida.valueOf(medidaStr));
+            } catch (IllegalArgumentException e) {
+                p.setMedida(null);
+            }
+        }
+
+        return p;
+    }
     @Override
 	public int hashCode() {
 		return Objects.hash(id);

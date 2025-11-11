@@ -14,28 +14,25 @@ import java.util.Map;
 
 public class Gestion <T extends IGestionable<?>>{ // clase generica que recibe una clase que implemente IGestionable 
     private String dia;
-    private double ctaCte;
     LinkedHashSet<T> listaGestora;//Administrativos, Personal, Almacenamiento
-
+    private final String cuenta = "admin";
+    private final String contrasenia = "admin";
 
     public Gestion() {
         this.listaGestora = new LinkedHashSet<>();
         this.dia = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")); // inicializa el dia con el tiempo actual en un formato tipo String
-        this.ctaCte = 0;
-    }
-
-    public Gestion(double ctaCte) {
-        this.listaGestora = new LinkedHashSet<>();
-        this.dia = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        this.ctaCte = ctaCte;
     }
     
     public String getDia() {
 		return dia;
 	}
 
-	public double getCtaCte() {
-		return ctaCte;
+	protected String getCuenta() {
+		return cuenta;
+	}
+
+	protected String getContrasenia() {
+		return contrasenia;
 	}
 
 	public void agregar(T t)
@@ -56,7 +53,7 @@ public class Gestion <T extends IGestionable<?>>{ // clase generica que recibe u
         }
         return false;
     }
-    public String listarAlmacenamiento()
+    public String listar()
     {
         StringBuilder sb = new StringBuilder();
 
@@ -83,5 +80,7 @@ public class Gestion <T extends IGestionable<?>>{ // clase generica que recibe u
         }
         return ganancias;
     }
+    
+    
 
 }

@@ -2,6 +2,9 @@ package registros;
 
 import java.util.UUID;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class Venta {
 
 	private String fecha, hora;
@@ -27,6 +30,41 @@ public class Venta {
 
 	public UUID getId() {
 		return id;
+	}
+	
+	protected void setFecha(String fecha) {
+		this.fecha = fecha;
+	}
+
+
+	protected void setHora(String hora) {
+		this.hora = hora;
+	}
+
+
+	protected void setId(UUID id) {
+		this.id = id;
+	}
+
+
+	public JSONArray toJson() 
+	{
+		JSONObject jb = new JSONObject();
+		JSONArray jArray = new JSONArray();
+		
+		jb.put("fecha", getFecha());
+		jb.put("hora", getHora());
+		jb.put("id", getId().toString());
+		
+		jArray.put(jb);
+		
+		return jArray;
+	}
+	public void toObject(JSONObject jb)
+	{
+		this.setFecha(jb.getString("fecha"));
+		this.setHora(jb.getString("hora"));
+		this.setId(UUID.fromString(jb.getString("id")));
 	}
 
 

@@ -1,14 +1,24 @@
 package empleados;
 
+import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import interfaces.ISalario;
 import registros.Entrevista;
 
-public class RRHH extends Administrativo {
+public class RRHH extends Administrativo implements ISalario {
 
 	private LinkedHashMap<Integer,Entrevista> entrevistasAgendadas;
 
+	
+	public RRHH(){
+        super();
+        this.entrevistasAgendadas = new LinkedHashMap<>();
+    }
     /**
      * Construye un nuevo empleado de {@code RRHH} como si fuera un nuevo empleado, pidiendo solo información obligatoria.
      *
@@ -39,8 +49,13 @@ public class RRHH extends Administrativo {
         super(nombre, DNI, genero, salario, activo, antiguedad, correo, contrasenia);
         this.entrevistasAgendadas = new LinkedHashMap<>();
     }
+
+    /**
+     * Agenda todas las entrevistas no agendadas que posea el arraylist estatico de los secretarios en el LinkedHashMap de este empleado.
+     *
+     */
     public void asignarEntrevistas() {
-        // simplemente apunta a la misma lista
+
         if (Secretario.entrevistas != null) {
             this.entrevistasAgendadas = new LinkedHashMap<>();
             for (Entrevista e : Secretario.entrevistas) {
@@ -61,14 +76,56 @@ public class RRHH extends Administrativo {
     	
     	return sb.toString();
     }
+    public String listarEntrevistasPendientes()
+    {
+    	StringBuilder sb = new StringBuilder();
+
+	    	for(Map.Entry<Integer, Entrevista> entry : entrevistasAgendadas.entrySet())
+	    	{
+	    		if(entry.getValue().getDia() >= LocalDate.now().getDayOfMonth()
+	    				&& entry.getValue().getMes() >= LocalDate.now().getMonthValue()
+	    				&& entry.getValue().getAnio() >= LocalDate.now().getYear())
+	    		{
+	    			sb.append(entry.getValue().getFecha().toString());
+	    		}
+	    		
+	    	}
+    	
+    	return sb.toString();
+    }
     @Override
     public String toString() {
         return "RRHH[" + super.toString();
     }
 
-    public void darAumento(Empleado empleado, int aumento){
-        empleado.setSalario(empleado.getSalario() + empleado.getSalario() * aumento /100);
+    /**
+     * Aumenta el salario de un empleado sobre un porcentaje de su salario actual.
+     *
+     * @param empleado a quien se le da el aumento.
+     * @param aumento porcentaje de aumento de salario.
+     */
+    public void darAumentoPorcentaje(Empleado empleado, int aumento){
+        empleado.setSalario(empleado.getSalario() + (empleado.getSalario() /100 * aumento));
     }
+
+    /**
+     * Aumenta el salario de un empleado sobre un monto fijo.
+     *
+     * @param empleado a quien se le da el aumento
+     * @param aumento aumento a salario en pesos.
+     */
+    public void darAumento(Empleado empleado, int aumento){
+        empleado.setSalario(empleado.getSalario() + aumento);
+    }
+    
+    @Override
+	public JSONArray toJsonAdministrativo() {
+		// TODO Auto-generated method stub
+    	JSONArray jArray = super.toJsonAdministrativo();
+    	JSONObject jb = jArray.getJSONObject(0);
+    	jb.put("tipo", "RRHH");
+		return jArray;
+	}
 
     @Override
     public Integer getIdentificador() {

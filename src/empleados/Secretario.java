@@ -8,11 +8,17 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class Secretario extends Administrativo {
 
     protected static TreeMap<Integer, CV> curriculums = new TreeMap<>();;
     protected static ArrayList<Entrevista> entrevistas = new ArrayList<>();
 
+    public Secretario(){
+        super();
+    }
     /**
      * Construye un nuevo {@code Secretario} como si fuera un nuevo empleado, pidiendo solo información obligatoria.
      *
@@ -92,6 +98,18 @@ public class Secretario extends Administrativo {
     public boolean descartarCV(CV curri){
         return curriculums.remove(curri.getContador(), curri);
     }
+    public CV buscarCv(int dni)
+    {
+    	for(Map.Entry<Integer, CV> entry : curriculums.entrySet())
+    	{
+    		if(entry.getValue().getDni() == dni)
+    		{
+    			return entry.getValue();
+    		}
+    	}
+    	
+    	return null;
+    }
 
     public String listarEntrevistas(){
         StringBuilder lista = new StringBuilder();
@@ -114,6 +132,15 @@ public class Secretario extends Administrativo {
     public String toString() {
         return "Secretario[" + super.toString();
     }
+    
+    @Override
+	public JSONArray toJsonAdministrativo() {
+		// TODO Auto-generated method stub
+    	JSONArray jArray = super.toJsonAdministrativo();
+    	JSONObject jb = jArray.getJSONObject(0);
+    	jb.put("tipo", "Secretario");
+		return jArray;
+	}
 
     @Override
     public Integer getIdentificador() {

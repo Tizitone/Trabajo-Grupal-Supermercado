@@ -128,20 +128,21 @@ public class Entrevista {
     	JSONArray jarrayCv = new JSONArray();
     	JSONArray jarray = new JSONArray();
     	
-    	jb.append("dia", getDia());
-    	jb.append("mes", getMes());
-    	jb.append("anio", getAnio());
-    	jb.append("hora", getHora());
-    	jb.append("minuto", getMinuto());
+    	jb.put("dia", getDia());
+    	jb.put("mes", getMes());
+    	jb.put("anio", getAnio());
+    	jb.put("hora", getHora());
+    	jb.put("minuto", getMinuto());
     	
-    	jbCv.append("nombre", getCurriculum().nombre);
-    	jbCv.append("apellido", getCurriculum().apellido);
-    	jbCv.append("edad", getCurriculum().edad);
-    	jbCv.append("telefono", getCurriculum().telefono);
-    	jbCv.append("correo", getCurriculum().correo);
+    	jbCv.put("nombre", getCurriculum().nombre);
+    	jbCv.put("apellido", getCurriculum().apellido);
+    	jbCv.put("dni", getCurriculum().dni);
+    	jbCv.put("edad", getCurriculum().edad);
+    	jbCv.put("telefono", getCurriculum().telefono);
+    	jbCv.put("correo", getCurriculum().correo);
     	jarrayCv.put(jbCv);
     	
-    	jb.append("Cv", jarrayCv);
+    	jb.put("Cv", jarrayCv);
     	
     	jarray.put(jb);
     	
@@ -150,11 +151,19 @@ public class Entrevista {
     public void toObject(JSONObject jb)
     {
     	JSONArray jArray = jb.getJSONArray("Cv");
+    	JSONObject jbCv = new JSONObject();
     	this.setDia(jb.getInt("dia"));
     	this.setMes(jb.getInt("mes"));
     	this.setAnio(jb.getInt("anio"));
     	this.setHora(jb.getInt("hora"));
     	this.setMinuto(jb.getInt("minuto"));
+    	jbCv = jArray.getJSONObject(0);
+    	this.getCurriculum().setNombre(jbCv.getString("nombre"));
+    	this.getCurriculum().setApellido(jbCv.getString("apellido"));
+    	this.getCurriculum().setDni(jbCv.getInt("dni"));
+    	this.getCurriculum().setEdad(jbCv.getInt("edad"));
+    	this.getCurriculum().setTelefono(jbCv.getString("telefono"));
+    	this.getCurriculum().setCorreo(jbCv.getString("correo"));
     	
     }
     

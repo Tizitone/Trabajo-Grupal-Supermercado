@@ -1,0 +1,35 @@
+[
+    {
+        "tipo": "Repositor",
+        "genero": "m",
+        "salario": 90000,
+        "antiguedad": 5,
+        "informe": "",
+        "productividad": 0,
+        "nombre": "juanita",
+        "dni": 36888888,
+        "activo": true
+    },
+    {
+        "tipo": "Cajero",
+        "genero": "h",
+        "salario": 100000,
+        "antiguedad": 5,
+        "informe": "",
+        "productividad": 0,
+        "nombre": "Juan",
+        "dni": 32685938,
+        "activo": true
+    },
+    {
+        "tipo": "Limpiador",
+        "genero": "m",
+        "salario": 50000,
+        "antiguedad": 3,
+        "informe": "",
+        "productividad": 0,
+        "nombre": "Carla",
+        "dni": 44575848,
+        "activo": true
+    }
+]
