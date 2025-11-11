@@ -127,6 +127,17 @@ public class Limpiador extends Personal implements ISalario, IRendimiento{
 		return (float)(rendimientoTotal/100)+1;
 	}
 
+		public Estanteria buscarEstanteria(Almacenamiento almacenamiento, String id) {
+		for(Estanteria e : almacenamiento.getEstanterias())
+		{
+			if(e.getId().toString().equals(id))
+			{
+				return e;
+			}
+		}
+		return null;
+	}
+
 	@Override
 	public Integer getIdentificador() {
 		return 0;
