@@ -63,7 +63,7 @@ public class Mostrador implements IEnsuciable{
     }
 
     //le resta valor a la cantEnVenta de un producto
-    public  boolean venderArticulo(String id,int cant)
+    public static boolean venderArticulo(String id,int cant)
     {
         boolean exito = false;
         if(buscarProducto(id)==null) return false;
@@ -73,7 +73,6 @@ public class Mostrador implements IEnsuciable{
             p.setCantEnVenta(p.getCantEnVenta()-cant);
 			 p.setVendidos(p.getVendidos()+cant);
             exito = true;
-            calcularIndiceSuciedad();
         }
 
         return exito;

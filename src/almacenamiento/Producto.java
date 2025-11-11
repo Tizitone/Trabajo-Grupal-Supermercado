@@ -29,6 +29,7 @@ public class Producto implements Comparable<Producto>{
     public Producto(String nombre,String marca,ETipoMedida medida,double peso, String descripcionAdicional ,double precioUnitario, int stock) {
         this.id = UUID.randomUUID();
         this.nombre = nombre;
+        this.marca = marca;
         this.precioUnitario = precioUnitario;
         this.descripcionAdicional = descripcionAdicional;
         this.medida = medida;
@@ -131,7 +132,7 @@ public class Producto implements Comparable<Producto>{
         jb.put("precioUnitario", precioUnitario);
         jb.put("peso", peso);
         jb.put("stock", stock);
-        jb.put("medida", medida.name());
+        jb.put("medida", medida);
         jb.put("cantEnVenta", cantEnVenta);
         jb.put("vendidos", vendidos);
         return jb;
@@ -139,10 +140,7 @@ public class Producto implements Comparable<Producto>{
     public Producto toObject(JSONObject jb) {
         Producto p = new Producto();
 
-        // Asignar ID
         p.setId(UUID.fromString(jb.getString("id")));
-
-        // Asignar atributos básicos
         p.setNombre(jb.getString("nombre"));
         p.setMarca(jb.getString("marca"));
         p.setDescripcionAdicional(jb.getString("descripcionAdicional"));
@@ -151,16 +149,7 @@ public class Producto implements Comparable<Producto>{
         p.setStock(jb.getInt("stock"));
         p.setCantEnVenta(jb.getInt("cantEnVenta"));
         p.setVendidos(jb.getInt("vendidos"));
-
-        // Enum ETipoMedida
-        String medidaStr = jb.getString("medida");
-        if (medidaStr != null && !medidaStr.equals("null")) {
-            try {
-                p.setMedida(ETipoMedida.valueOf(medidaStr));
-            } catch (IllegalArgumentException e) {
-                p.setMedida(null);
-            }
-        }
+        p.setMedida(ETipoMedida.valueOf(jb.getString("medida")));
 
         return p;
     }

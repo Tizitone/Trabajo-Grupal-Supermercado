@@ -1,6 +1,6 @@
 package excepciones;
 
-public class InvalidAgeException extends RuntimeException {
+public class InvalidAgeException extends Exception {
 
     /**
 	 * 

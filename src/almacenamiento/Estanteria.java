@@ -12,7 +12,7 @@ import interfaces.IEnsuciable;
 
 public class Estanteria implements IEnsuciable{
     private UUID id;
-    private final ArrayList<Producto>productos;
+    private ArrayList<Producto>productos;
     private int capacidadProductos;
     private int suciedad=0;
 

@@ -34,6 +34,10 @@ public class Cajero extends Personal implements ISalario, IRendimiento {
         super("", 0, 'n');
         this.mostradorAsignado = null;
     }
+    public Cajero(Mostrador m){
+        super("", 0, 'n');
+        this.mostradorAsignado = null;
+    }
 
     /**
      * Construye un nuevo {@code Cajero} como si fuera un nuevo empleado, pidiendo solo información obligatoria.

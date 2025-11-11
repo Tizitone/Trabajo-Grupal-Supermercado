@@ -67,9 +67,8 @@ public class Secretario extends Administrativo {
                     entry.getAnio(), entry.getMes(), entry.getDia(),
                     entry.getHora(), entry.getMinuto()
             );
-            if(fechaHoraExistente.equals(fechaHoraEntrevista)) { //compara la fecha de las entrevistas ingresadas, con la que quiere ingresar, si es igual a alguna corta el metodo
-                return false;
-            }
+            //compara la fecha de las entrevistas ingresadas, con la que quiere ingresar, si es igual a alguna corta el metodo
+            if(fechaHoraExistente.equals(fechaHoraEntrevista)) return false;
         }
         entrevistas.add(e); // si todo fue bien, agrega la entrevista al arraylist y devuelve true;
         return true;

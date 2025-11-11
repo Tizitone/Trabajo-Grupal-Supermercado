@@ -5,6 +5,8 @@ import almacenamiento.Estanteria;
 import almacenamiento.Mostrador;
 import interfaces.IRendimiento;
 import interfaces.ISalario;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class Limpiador extends Personal implements ISalario, IRendimiento{
 
@@ -13,7 +15,10 @@ public class Limpiador extends Personal implements ISalario, IRendimiento{
 	//cada uno tendra una variable para sumarle o restarle valor al rendimiento actual que tengan
 	private int rendimientoActual;
 
-
+	public Limpiador()
+	{
+		super();
+	}
 
 	public Limpiador(String nombre, int DNI, char genero) {
 		super(nombre, DNI, genero);
@@ -137,7 +142,14 @@ public class Limpiador extends Personal implements ISalario, IRendimiento{
 		}
 		return null;
 	}
-
+	@Override
+	public JSONArray toJsonPersonal() {
+		// TODO Auto-generated method stub
+		JSONArray jArray = super.toJsonPersonal();
+		JSONObject jb = jArray.getJSONObject(0);
+		jb.put("tipo", "Limpiador");
+		return jArray;
+	}
 	@Override
 	public Integer getIdentificador() {
 		return 0;

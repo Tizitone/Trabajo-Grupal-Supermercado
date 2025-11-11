@@ -43,7 +43,7 @@ public class JsonGestor {
 
         try (FileWriter file = new FileWriter(rutaArchivo)) {
             file.write(jArray.toString(4)); // con sangría
-            System.out.println("✅ Datos guardados en " + rutaArchivo);
+            System.out.println("Datos guardados en " + rutaArchivo);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -62,7 +62,7 @@ public class JsonGestor {
 
                 Object obj = null;
 
-                // === EMPLEADOS ===
+                // EMPLEADOS
                 switch (tipo) {
                     case "Cajero":
                         obj = new Cajero();
@@ -85,7 +85,7 @@ public class JsonGestor {
                         ((RRHH) obj).toObject(jb);
                         break;
 
-                    // === ALMACENAMIENTO ===
+                    // ALMACENAMIENTO
                     case "Producto":
                         obj = new Producto();
                         ((Producto) obj).toObject(jb);
@@ -95,7 +95,7 @@ public class JsonGestor {
                         ((Estanteria) obj).toObject(jb);
                         break;
 
-                    // === CLIENTES ===
+                    // CLIENTES
                     case "Cliente":
                         obj = new Cliente();
                         ((Cliente) obj).toObject(jb);
@@ -110,7 +110,7 @@ public class JsonGestor {
             }
 
         } catch (IOException e) {
-            System.out.println(" rror leyendo " + rutaArchivo + ": " + e.getMessage());
+            System.out.println(" Error leyendo " + rutaArchivo + ": " + e.getMessage());
         }
 
         return lista;

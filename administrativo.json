@@ -1,1 +1,46 @@
-[]
+[
+    {
+        "tipo": "RRHH",
+        "genero": "h",
+        "salario": 127000,
+        "antiguedad": 5,
+        "correo": "popcap1@gmail.com",
+        "contrasenia": "popcap27",
+        "nombre": "Pedro",
+        "dni": 47839859,
+        "activo": true
+    },
+    {
+        "tipo": "Secretario",
+        "genero": "h",
+        "salario": 127000,
+        "antiguedad": 5,
+        "correo": "popcap2@gmail.com",
+        "contrasenia": "popcap27",
+        "nombre": "Juan",
+        "dni": 32685938,
+        "activo": true
+    },
+    {
+        "tipo": "RRHH",
+        "genero": "h",
+        "salario": 127000,
+        "antiguedad": 5,
+        "correo": "popcap1@gmail.com",
+        "contrasenia": "popcap27",
+        "nombre": "Pedro",
+        "dni": 47839859,
+        "activo": true
+    },
+    {
+        "tipo": "Secretario",
+        "genero": "h",
+        "salario": 127000,
+        "antiguedad": 5,
+        "correo": "popcap2@gmail.com",
+        "contrasenia": "popcap27",
+        "nombre": "Juan",
+        "dni": 32685938,
+        "activo": true
+    }
+]

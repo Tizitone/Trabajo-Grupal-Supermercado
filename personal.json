@@ -31,5 +31,27 @@
         "nombre": "Carla",
         "dni": 44575848,
         "activo": true
+    },
+    {
+        "tipo": "Cajero",
+        "genero": "h",
+        "salario": 20000,
+        "antiguedad": 2,
+        "informe": "",
+        "productividad": 0,
+        "nombre": "pepe",
+        "dni": 123456789,
+        "activo": true
+    },
+    {
+        "tipo": "Limpiador",
+        "genero": "h",
+        "salario": 15000,
+        "antiguedad": 1,
+        "informe": "",
+        "productividad": 0,
+        "nombre": "arturo",
+        "dni": 321654987,
+        "activo": true
     }
 ]
