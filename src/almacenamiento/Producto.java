@@ -15,15 +15,16 @@ public class Producto implements Comparable<Producto>{
     private int cantEnVenta, vendidos;
 
     public Producto() {
-        this.id = UUID.randomUUID();
-        this.nombre = "";
-        this.marca = "";
-        this.descripcionAdicional = "";
-        this.precioUnitario = 0;
-        this.peso = 0;
-        this.stock = 0;
-        this.cantEnVenta=0;
-		this.vendidos = 0;
+        id = UUID.randomUUID();
+        nombre = "";
+        marca = "";
+        descripcionAdicional = "";
+        medida = ETipoMedida.GRAMO;
+        precioUnitario = 0;
+        peso = 0;
+        stock = 0;
+        cantEnVenta=0;
+		vendidos = 0;
     }
 
     public Producto(String nombre,String marca,ETipoMedida medida,double peso, String descripcionAdicional ,double precioUnitario, int stock) {

@@ -98,15 +98,14 @@ public class Cajero extends Personal implements ISalario, IRendimiento {
     /**
      * Registra las compras de un cliente y devuelve un string como si fuera un ticket.
      *
-     * @param idProducto Código de los productos que compra el cliente.
      * @return {@code String} que representa el ticket de la venta.
      */
     public String registrarCompras()
     {
         StringBuilder sb = new StringBuilder();
         this.totalVenta = 0;
-        ventas.put(new Venta(),auxVentas); //crea una instancia de venta con la fecha actual, y como valor le pasa el arreglo de productos
-        auxVentas.clear(); //limpia el auxiliar una vez que se agrego a las ventas
+        ventas.put(new Venta(),auxVentas); //crea una instancia de venta con la fecha actual, y como valor le pasa el arreglo de productos.
+        auxVentas.clear(); //limpia el auxiliar una vez que se agrego a las ventas.
 
         Map.Entry<Venta, ArrayList<Producto>> auxVentas = ventas.entrySet().iterator().next(); // variable de tipo entrymap para obtener la clave y el valor que sean las ultimas en la lista
         

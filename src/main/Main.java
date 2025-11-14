@@ -55,52 +55,61 @@ public class Main {
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 
-		final String archivoPersonal = "Trabajo-Grupal-Supermercado-master/personal.json";
-		final String archivoAdministrativo = "Trabajo-Grupal-Supermercado-master/administrativo.json";
-		final String archivoAlmacenamiento = "Trabajo-Grupal-Supermercado-master/almacenamiento.json";
-		final String archivoProducto = "Trabajo-Grupal-Supermercado-master/productos.json";
-		final String archivoEstanteria = "Trabajo-Grupal-Supermercado-master/estanteria.json";
+		final String archivoPersonal = "C:\\Users\\tixia\\IdeaProjects\\Trabajo-Grupal-Supermercado\\personal.json";
+		final String archivoAdministrativo = "C:\\Users\\tixia\\IdeaProjects\\Trabajo-Grupal-Supermercado\\administrativo.json";
+		final String archivoProducto = "C:\\Users\\tixia\\IdeaProjects\\Trabajo-Grupal-Supermercado\\productos.json";
+		final String archivoEstanteria = "C:\\Users\\tixia\\IdeaProjects\\Trabajo-Grupal-Supermercado\\estanteria.json";
 
+		/*
 		Estanteria estanteria = new Estanteria(120);
 		Cajero cajero = new Cajero(m, "Juan", 32685938, 'h', 100000, true, 5);
 		Limpiador limpiador = new Limpiador("Carla", 44575848, 'm', 50000, true, 3);
 		Repositor repositor = new Repositor("juanita", 36888888, 'm', 90000, true, 5);
 		RRHH recursos = new RRHH("Pedro", 47839859, 'h', 127000, true, 5, "popcap1@gmail.com", "popcap27");
 		Secretario secretario = new Secretario("Juan", 32685938, 'h', 127000, true, 5, "popcap2@gmail.com", "popcap27");
+		 */
 
 		cargarJSONPersonal(personal,archivoPersonal);
 		cargarJSONAdministrativo(administrativos,archivoAdministrativo);
 		cargarJSONProducto(producto,archivoProducto);
-		cargarJSONEstanteria(estanterias,archivoEstanteria);
+		cargarJSONEstanteria(archivoEstanteria);
 		agregarAlMostrador();
 
-		char continuar = 's';
+		char continuar;
 		do {
 			switch (bienvenida()) {
+
 				case 1:
 					menuPersonal();
-					break;
+				break;
+
 				case 2:
 					menuAdministrativo();
-					break;
+				break;
+
 				case 3:
 					menuGestor();
 					JsonGestor.guardarListaJSON(producto,archivoProducto);
 					JsonGestor.guardarListaJSON(personal,archivoPersonal);
 					JsonGestor.guardarListaJSON(administrativos,archivoAdministrativo);
 					JsonGestor.guardarListaJSON(estanterias,archivoEstanteria);
-					break;
+				break;
+
 				case 0:
 					System.out.println("Hasta pronto...");
-					break;
+				break;
+
 				default:
 					System.out.println("Opcion invalida cerrando...");
-					break;
+				break;
 			}
+
 			System.out.println("Desea continuar en el menu?(s/n)");
 			continuar = input.nextLine().toLowerCase().charAt(0);
+
 		}while (continuar == 's');
 	}
+
 	private static void cargarJSONPersonal(ArrayList<Personal> personal,String archivo) {
 		// Leer el contenido JSON
 		JSONArray jArray = new JSONArray(JsonUtiles.leerUnJson(archivo));
@@ -136,7 +145,9 @@ public class Main {
 			personal.add(p);
 		}
 	}
+
 	private static void cargarJSONAdministrativo(ArrayList<Administrativo> administrativo, String archivo) {
+
 		// Leer el contenido JSON
 		JSONArray jArray = new JSONArray(JsonUtiles.leerUnJson(archivo));
 
@@ -170,7 +181,9 @@ public class Main {
 			administrativo.add(a);
 		}
 	}
+
 	private static void cargarJSONProducto(ArrayList<Producto> producto, String archivo) {
+
 		// Lee el contenido JSON
 		JSONArray jArray = new JSONArray(JsonUtiles.leerUnJson(archivo));
 
@@ -187,7 +200,8 @@ public class Main {
 			producto.add(a);
 		}
 	}
-	private static void cargarJSONEstanteria(ArrayList<Estanteria> producto, String archivo) {
+
+	private static void cargarJSONEstanteria(String archivo) {
 		// Lee el contenido JSON
 		JSONArray jArray = new JSONArray(JsonUtiles.leerUnJson(archivo));
 
@@ -204,17 +218,17 @@ public class Main {
 			estanterias.add(e);
 		}
 	}
-	private static void agregarAlMostrador()
-	{
+
+	private static void agregarAlMostrador() {
 		for(Producto p: producto)
 		{
 			m.agregarArticulos(p);
 		}
 	}
-	private static void menuPersonal()
-	{
+
+	private static void menuPersonal() {
 		Scanner input = new Scanner(System.in);
-		char continuar = 's';
+		char continuar;
 
 		do {
 			int seleccion = seleccionPersonal();
@@ -235,64 +249,70 @@ public class Main {
 			}
 
 			switch (seleccion) {
-				case 1:
-					Cajero c = new Cajero();
+
+				case 1:// Ingresar como Cajero.
+					Cajero c;
 					if (encontrado instanceof Cajero) {
 						c = (Cajero) encontrado;
-						System.out.println("Bienvenido " + c.getNombre() + "!");
+						System.out.println("Bienvenido/a " + c.getNombre() + "!");
 						menuCajero(c);
 					} else {
 						System.out.println("Ese dni no corresponde a su area");
 					}
+				break;
 
-					break;
-				case 2:
-					Limpiador l = new Limpiador();
+				case 2:// Ingresar como Limpiador
+					Limpiador l;
 					if (encontrado instanceof Limpiador) {
 						l = (Limpiador) encontrado;
-						System.out.println("Bienvenido " + l.getNombre() + "!");
+						System.out.println("Bienvenido/a " + l.getNombre() + "!");
 						menuLimpiador(l);
 					} else {
 						System.out.println("Ese dni no corresponde a su area");
 					}
-					break;
+				break;
+
 				case 3:
-					Repositor r = new Repositor();
+					Repositor r;
 					if (encontrado instanceof Repositor) {
 						r = (Repositor) encontrado;
-						System.out.println("Bienvenido " + r.getNombre() + "!");
+						System.out.println("Bienvenido/a " + r.getNombre() + "!");
 						menuRepositor(r);
 					} else {
 						System.out.println("Ese dni no corresponde a su area");
 					}
-					break;
+				break;
+
 				default:
 					System.out.println("No se encontro el Personal con el dni");
-					break;
+				break;
 			}
+
 			System.out.println("Desea intentar entrar con otro dni?(s/n)");
 			continuar = input.nextLine().toLowerCase().charAt(0);
 		}while (continuar == 's');
 	}
-	private static void menuCajero(Cajero c)
-	{
+
+	private static void menuCajero(Cajero c) {
 
 		Scanner input = new Scanner(System.in);
-		char continuar = 'n';
+		char continuar;
 		do {
 			switch(opcionCajero())
 			{
-				case 1:
+				case 1:// Listar Ventas.
 					System.out.println(c.listarVentas());
-					break;
-				case 2:
-					char miembroContinuar = 's', cliente = 'n';
-					System.out.println("El cliente es miembro?(s/n)");
-					cliente = input.nextLine().toLowerCase().charAt(0);
+				break;
 
+				case 2:// Atender Cliente.
+
+					char miembroContinuar = 's', cliente;
+					System.out.println("El cliente es miembro? (s/n)");
+					cliente = input.nextLine().toLowerCase().charAt(0);
 					System.out.println("recibiendo productos: ");
-					while(miembroContinuar == 's')
-					{
+
+					while(miembroContinuar == 's') {// Ingreso de los productos a vender
+
 						System.out.println("Ingrese el codigo del producto");
 						String codigo = input.nextLine();
 						System.out.println("Ingrese la cantidad a vender del mismo");
@@ -301,21 +321,21 @@ public class Main {
 						c.venderProducto(codigo, cant);
 						System.out.println("Desea seguir vendiendo productos? (s/n)");
 						miembroContinuar = input.nextLine().toLowerCase().charAt(0);
-					}
-					if(cliente == 's')
-					{
+
+					} if(cliente == 's') {//
+
 						System.out.println("Ingrese el DNI del cliente miembro:");
 						int dni = input.nextInt();
 						input.nextLine();
 						c.atenderMiembro(c.buscarMiembro(dni));
-					}
-					else
-					{
-						c.atenderCliente();
-					}
+
+					} else c.atenderCliente();
+
 					System.out.println(c.registrarCompras());
-					break;
-				case 3:
+				break;
+
+				case 3:// Agregar Miembro.
+
 					System.out.println("Ingrese el nombre del nuevo cliente");
 					String nombre = input.nextLine();
 					System.out.println("Ingrese el dni del nuevo cliente");
@@ -327,15 +347,15 @@ public class Main {
 
 					Membresia membresia = opcionMembresia();
 					c.agregarCliente(new Cliente(nombre,dni,new TarjetaMembresia(membresia)));
-					break;
+				break;
 			}
 			System.out.println("Desea salir?(s/n)");
 			continuar = input.nextLine().toLowerCase().charAt(0);
 
 		}while(continuar=='n');
 	}
-	private static Membresia opcionMembresia()
-	{
+
+	private static Membresia opcionMembresia() {
 		Scanner input = new Scanner(System.in);
 		System.out.println("Ingrese una opcion: ");
 		System.out.println("(1)-Membresia cobre");
@@ -358,8 +378,7 @@ public class Main {
 		}
 		return m;
 	}
-	private static int opcionCajero()
-	{
+	private static int opcionCajero() {
 		Scanner input = new Scanner(System.in);
 		System.out.println("Ingrese una opcion");
 		System.out.println("(1)-Listar ventas");
@@ -368,10 +387,10 @@ public class Main {
 		System.out.println("(0) Salir");
 		return input.nextInt();
 	}
-	private static void menuLimpiador(Limpiador l)
-	{
+
+	private static void menuLimpiador(Limpiador l) {
 		Scanner input = new Scanner(System.in);
-		char continuar = 's';
+		char continuar;
 		do {
 			switch(opcionLimpiador())
 			{
@@ -402,29 +421,23 @@ public class Main {
 		}while(continuar == 's');
 
 	}
-	private static int opcionLimpiador()
-	{
+
+	private static int opcionLimpiador() {
 		Scanner input = new Scanner(System.in);
-		System.out.println("Ingresar una opcion");
-		System.out.println("(1)-Listar estanterias sucias");
-		System.out.println("(2)-Confirmar estanteria limpia");
-		System.out.println("(3)-Confirmar tienda limpia");
+		System.out.println("Ingresar una opcion\n(1)-Listar estanterias suciasn\n(2)-Confirmar estanteria limpia\n(3)-Confirmar tienda limpia");
 		return input.nextInt();
 	}
-	private static void menuRepositor(Repositor r)
-	{
+
+	private static void menuRepositor(Repositor r) {
 		Scanner input = new Scanner(System.in);
+		char continuar;
+		do {
+			switch(opcionRepositor()) {
 
-		input.nextLine();
-
-		char continuar = 's';
-		do
-		{
-			switch(opcionRepositor())
-			{
 				case 1:
 					System.out.println(r.listarEstantes(almacenamiento));
-					break;
+				break;
+
 				case 2:
 					System.out.println("Ingrese el codigo de la estanteria: ");
 					String codigoEstanteria = input.nextLine();
@@ -434,31 +447,29 @@ public class Main {
 					int cant = input.nextInt();
 					input.nextLine();
 					r.reponerProducto(m, almacenamiento.buscarEstanteriaPorID(codigoEstanteria), codigoProducto, cant);
-					break;
+				break;
+
 				case 3:
 					r.contarStock();
 					System.out.print("Inventario hecho!");
-					break;
+				break;
 			}
+
 			System.out.println("Desea continuar realizando actividades?(s/n)");
 			continuar = input.nextLine().toLowerCase().charAt(0);
 		}while(continuar == 's');
 	}
-	private static int opcionRepositor()
-	{
-		Scanner input = new Scanner(System.in);
 
-		System.out.println("Ingrese una opcion:");
-		System.out.println("(1)-Listar estantes");
-		System.out.println("(2)-Reponer producto");
-		System.out.println("(3)-Hacer inventario");
+	private static int opcionRepositor() {
+		Scanner input = new Scanner(System.in);
+		System.out.println("Ingrese una opcion:\n(1)-Listar estantes\n(2)-Reponer producto\n(3)-Hacer inventario");
 		return input.nextInt();
 	}
 
 	private static void menuAdministrativo(){
 
 		Scanner input = new Scanner(System.in);
-		char continuar ='s';
+		char continuar;
 
 		do {
 			int seleccion = seleccionAdministrativo();
