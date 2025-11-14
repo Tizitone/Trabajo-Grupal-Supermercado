@@ -140,11 +140,15 @@ public class Cajero extends Personal implements ISalario, IRendimiento {
     }
     
     public void atenderMiembro(Cliente cliente){
-    	if(buscarMiembro(cliente.getDNI())==null) throw new InvalidDNIException("No se ha encontrado al cliente");
+        try{
+            if(buscarMiembro(cliente.getDNI())==null) throw new InvalidDNIException("No se ha encontrado al cliente");
     		
-        cliente.setConsumosTotales(cliente.getConsumosTotales()+(totalVenta * (1-cliente.getDescuento())));
+            cliente.setConsumosTotales(cliente.getConsumosTotales()+(totalVenta * (1-cliente.getDescuento())));
 
-        setProductividad(getProductividad() + 1 );
+            setProductividad(getProductividad() + 1 );
+        } catch (InvalidDNIException idnie) {
+            idnie.getMessage();
+        }
     }
 
     public void atenderCliente(){

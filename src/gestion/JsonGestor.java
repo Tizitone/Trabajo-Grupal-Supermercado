@@ -6,11 +6,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+import main.Main;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import empleados.*;
-import main.Menu;
 import almacenamiento.*;
 import clientes.*;
 
@@ -119,22 +119,22 @@ public class JsonGestor {
         if (obj == null) return false;
 
         if (obj instanceof Personal) {
-            Menu.getPersonal().add((Personal) obj);
+            Main.getPersonal().add((Personal) obj);
             System.out.println("Personal agregado correctamente.");
             return true;
         } 
         else if (obj instanceof Administrativo) {
-            Menu.getAdministrativos().add((Administrativo) obj);
+            Main.getAdministrativos().add((Administrativo) obj);
             System.out.println("Administrativo agregado correctamente.");
             return true;
         } 
         else if (obj instanceof Producto) {
-            Menu.getProducto().add((Producto) obj);
+            Main.getProducto().add((Producto) obj);
             System.out.println("Producto agregado correctamente.");
             return true;
         } 
         else if (obj instanceof Estanteria) {
-            Menu.getEstanterias().add((Estanteria) obj);
+            Main.getEstanterias().add((Estanteria) obj);
             System.out.println("Estantería agregada correctamente.");
             return true;
         }

@@ -164,34 +164,22 @@ public class Entrevista {
     	this.getCurriculum().setEdad(jbCv.getInt("edad"));
     	this.getCurriculum().setTelefono(jbCv.getString("telefono"));
     	this.getCurriculum().setCorreo(jbCv.getString("correo"));
-    	
-    }
+	}
     
-    public String fechaToString(int dia,int mes,int anio) throws InvalidDateException
-    {
-    	StringBuilder sb = new StringBuilder();
-    	if(dia>31 || dia<0)
-    	{
-    		throw new InvalidDateException("El numero ingresado para el dia no es valido o esta fuera de rango");
-    	}
-    	if(mes>12 || mes<0)
-    	{
-    		throw new InvalidDateException("El numero ingresado para el mes no es valido o esta fuera de rango");
-    	}
-    	if(anio<LocalDate.now().getYear())
-    	{
-    		throw new InvalidDateException("El numero ingresado para el año no es valido o esta fuera de rango");
-    	}
-    	try
-    	{
-    		sb.append(LocalDate.of(anio, mes, dia).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-    	}catch(DateTimeException  o)
-    	{
-    		throw new InvalidDateException("La fecha ingresada no existe realmente.");
-    	}
-    	
-    	return sb.toString();
+    public String fechaToString(int dia,int mes,int anio) throws InvalidDateException{
+		StringBuilder sb = new StringBuilder();
+
+		if(dia>31 || dia<0) throw new InvalidDateException("El numero ingresado para el dia no es valido o esta fuera de rango");
+
+		if(mes>12 || mes<0)	throw new InvalidDateException("El numero ingresado para el mes no es valido o esta fuera de rango");
+
+		if(anio<LocalDate.now().getYear()) throw new InvalidDateException("El numero ingresado para el año no es valido o esta fuera de rango");
+
+		sb.append(LocalDate.of(anio, mes, dia).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+
+		return sb.toString();
     }
+
     public String horaToString(int hora, int minuto) throws InvalidDateException {
     	
     	StringBuilder sb = new StringBuilder();
@@ -203,6 +191,7 @@ public class Entrevista {
         
         return sb.toString();
     }
+
     @Override
     public String toString() {
         return "Entrevista dada el " + getFecha() + " a las " + getHorario() +

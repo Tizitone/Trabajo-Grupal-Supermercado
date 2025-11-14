@@ -133,10 +133,15 @@ public abstract class Empleado {
 
     // Verificaciones
     public boolean verificarNombre(String verificar){
-        if (verificar.length() > 12)
-            throw new InvalidLengthException("\u001B[31mEl nombre excede el limite de caracteres (12).\u001B[0m");
-        if (verificar.length() < 3)
+        try{
+            if (verificar.length() > 12)
+                throw new InvalidLengthException("\u001B[31mEl nombre excede el limite de caracteres (12).\u001B[0m");
+            if (verificar.length() < 3)
             throw new InvalidLengthException("\u001B[31mEl nombre es demasiado corto, debe superar los 3 caracteres.\u001B[0m");
+
+        }catch(InvalidLengthException ile){
+            ile.getMessage();
+        }
         return true;
     }
 

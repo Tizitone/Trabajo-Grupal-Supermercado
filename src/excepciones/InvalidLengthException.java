@@ -1,6 +1,6 @@
 package excepciones;
 
-public class InvalidLengthException extends RuntimeException{
+public class InvalidLengthException extends Exception{
 
     /**
 	 * 

@@ -1,6 +1,6 @@
 package excepciones;
 
-public class InvalidDateException extends RuntimeException{
+public class InvalidDateException extends Exception{
 
 	
 	/**

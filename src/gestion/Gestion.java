@@ -2,6 +2,7 @@ package gestion;
 
 import almacenamiento.Producto;
 import empleados.Cajero;
+import empleados.Personal;
 import interfaces.IGestionable;
 import registros.Venta;
 
