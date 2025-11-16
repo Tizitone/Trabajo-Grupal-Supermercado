@@ -31,5 +31,27 @@
         "nombre": "Carla",
         "dni": 44575848,
         "activo": true
+    },
+    {
+        "tipo": "Limpiador",
+        "genero": "h",
+        "salario": 50000,
+        "antiguedad": 0,
+        "informe": "",
+        "productividad": 0,
+        "nombre": "pedro",
+        "dni": 78946354,
+        "activo": true
+    },
+    {
+        "tipo": "Repositor",
+        "genero": "m",
+        "salario": 60000,
+        "antiguedad": 0,
+        "informe": "",
+        "productividad": 0,
+        "nombre": "monica",
+        "dni": 49798315,
+        "activo": true
     }
 ]

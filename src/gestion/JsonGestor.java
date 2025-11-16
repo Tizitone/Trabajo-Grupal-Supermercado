@@ -1,7 +1,8 @@
 package gestion;
 
-import java.io.FileWriter;
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -10,7 +11,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import empleados.*;
-import main.Menu;
 import almacenamiento.*;
 import clientes.*;
 
@@ -22,7 +22,7 @@ public class JsonGestor {
 
     public static <T> void guardarListaJSON(ArrayList<T> lista, String rutaArchivo) {
         JSONArray jArray = new JSONArray();
-
+        File archivo = new File(rutaArchivo);
         for (T obj : lista) {
             if (obj instanceof Personal) {
                 JSONArray arr = ((Personal) obj).toJsonPersonal();
@@ -30,20 +30,17 @@ public class JsonGestor {
             } else if (obj instanceof Administrativo) {
                 JSONArray arr = ((Administrativo) obj).toJsonAdministrativo();
                 jArray.put(arr.getJSONObject(0));
-            } else if (obj instanceof Producto) {
-                jArray.put(((Producto) obj).toJSON());
-            } else if (obj instanceof Estanteria) {
-                jArray.put(((Estanteria) obj).toJson());
-            } else if (obj instanceof Cliente) {
-                jArray.put(((Cliente) obj).toJson());
+            } else if (obj instanceof Almacenamiento) {
+                jArray.put(((Almacenamiento) obj).toJson());
             } else {
                 System.out.println("Tipo no soportado: " + obj.getClass().getSimpleName());
             }
         }
 
-        try (FileWriter file = new FileWriter(rutaArchivo)) {
-            file.write(jArray.toString(4)); // con sangría
-            System.out.println("✅ Datos guardados en " + rutaArchivo);
+        try (PrintWriter file = new PrintWriter(archivo)) {
+            file.println(jArray.toString(4)); // con sangría
+            file.close();
+            System.out.println("Datos guardados en " + rutaArchivo);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -62,7 +59,7 @@ public class JsonGestor {
 
                 Object obj = null;
 
-                // === EMPLEADOS ===
+                // EMPLEADOS
                 switch (tipo) {
                     case "Cajero":
                         obj = new Cajero();
@@ -85,7 +82,7 @@ public class JsonGestor {
                         ((RRHH) obj).toObject(jb);
                         break;
 
-                    // === ALMACENAMIENTO ===
+                    // ALMACENAMIENTO
                     case "Producto":
                         obj = new Producto();
                         ((Producto) obj).toObject(jb);
@@ -95,7 +92,7 @@ public class JsonGestor {
                         ((Estanteria) obj).toObject(jb);
                         break;
 
-                    // === CLIENTES ===
+                    // CLIENTES
                     case "Cliente":
                         obj = new Cliente();
                         ((Cliente) obj).toObject(jb);
@@ -110,36 +107,10 @@ public class JsonGestor {
             }
 
         } catch (IOException e) {
-            System.out.println(" rror leyendo " + rutaArchivo + ": " + e.getMessage());
+            System.out.println(" Error leyendo " + rutaArchivo + ": " + e.getMessage());
         }
 
         return lista;
     }
-    public static boolean agregarObjeto(Object obj) {
-        if (obj == null) return false;
 
-        if (obj instanceof Personal) {
-            Menu.getPersonal().add((Personal) obj);
-            System.out.println("Personal agregado correctamente.");
-            return true;
-        } 
-        else if (obj instanceof Administrativo) {
-            Menu.getAdministrativos().add((Administrativo) obj);
-            System.out.println("Administrativo agregado correctamente.");
-            return true;
-        } 
-        else if (obj instanceof Producto) {
-            Menu.getProducto().add((Producto) obj);
-            System.out.println("Producto agregado correctamente.");
-            return true;
-        } 
-        else if (obj instanceof Estanteria) {
-            Menu.getEstanterias().add((Estanteria) obj);
-            System.out.println("Estantería agregada correctamente.");
-            return true;
-        }
-
-        System.out.println("Tipo de objeto no reconocido: " + obj.getClass().getSimpleName());
-        return false;
-    }
 }

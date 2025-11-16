@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import interfaces.IGestionable;
 
 public class Almacenamiento implements IGestionable<String>{
-    private final UUID id;
+    private  UUID id;
     private ArrayList<Estanteria>estanterias;
     private int capacidadEstanterias;
 
@@ -16,7 +19,7 @@ public class Almacenamiento implements IGestionable<String>{
         this.estanterias = new ArrayList<Estanteria>();
         this.capacidadEstanterias = 0;
     }
-    public Almacenamiento(String direccion, int capacidadEstanterias) {
+    public Almacenamiento(int capacidadEstanterias) {
         this.id = UUID.randomUUID();
         this.estanterias = new ArrayList<Estanteria>();
         this.capacidadEstanterias = capacidadEstanterias;
@@ -25,8 +28,11 @@ public class Almacenamiento implements IGestionable<String>{
     public UUID getId() {
         return id;
     }
-
-    public ArrayList<Estanteria> getEstanterias() {
+    
+    public void setId(UUID id) {
+		this.id = id;
+	}
+	public ArrayList<Estanteria> getEstanterias() {
         return estanterias;
     }
 
@@ -77,6 +83,40 @@ public class Almacenamiento implements IGestionable<String>{
     	}
     	
     	return null;
+    }
+    public JSONObject toJson()
+    {
+    	JSONObject jb = new JSONObject();
+        JSONArray jEstanteria = new JSONArray();
+        
+        jb.put("tipo", "Almacenamiento");
+        jb.put("id", getId().toString());
+        jb.put("capacidad", getCapacidadEstanterias());
+        
+        for(Estanteria e : estanterias)
+        {
+        	jEstanteria.put(e.toJson()); 
+        	
+        }
+        jb.put("estanterias", jEstanteria);
+        
+    	return jb;
+    }
+    public void toObject(JSONObject jb)
+    {
+    	this.setId(UUID.fromString(jb.getString("id")));
+    	this.setCapacidadEstanterias(jb.getInt("capacidad"));
+    	
+    	 this.estanterias = new ArrayList<>();
+    	
+    	JSONArray jEstanterias = jb.getJSONArray("estanterias");
+    	for(int i = 0 ; i<jEstanterias.length() ; i++)
+    	{
+    		Estanteria e = new Estanteria();
+    		JSONObject jbObjEstanteria = jEstanterias.getJSONObject(i);
+    		e.toObject(jbObjEstanteria);
+    		this.estanterias.add(e);
+    	}	
     }
 
     @Override

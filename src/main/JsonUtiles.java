@@ -1,9 +1,6 @@
 package main;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -15,7 +12,7 @@ public class JsonUtiles {
 
     public static void grabarUnJson(JSONArray jsonArray, String archivo){
         try {
-            FileWriter file = new FileWriter(archivo);
+            PrintWriter file = new PrintWriter(archivo);
             file.write(jsonArray.toString(4));
             file.close();
         } catch (IOException | JSONException e) {

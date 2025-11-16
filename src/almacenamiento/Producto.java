@@ -29,6 +29,7 @@ public class Producto implements Comparable<Producto>{
     public Producto(String nombre,String marca,ETipoMedida medida,double peso, String descripcionAdicional ,double precioUnitario, int stock) {
         this.id = UUID.randomUUID();
         this.nombre = nombre;
+        this.marca = marca;
         this.precioUnitario = precioUnitario;
         this.descripcionAdicional = descripcionAdicional;
         this.medida = medida;
@@ -124,6 +125,7 @@ public class Producto implements Comparable<Producto>{
 
     public JSONObject toJSON() {
         JSONObject jb = new JSONObject();
+        jb.put("tipo", "producto");
         jb.put("id", id.toString());
         jb.put("nombre", nombre);
         jb.put("marca", marca);
@@ -131,38 +133,23 @@ public class Producto implements Comparable<Producto>{
         jb.put("precioUnitario", precioUnitario);
         jb.put("peso", peso);
         jb.put("stock", stock);
-        jb.put("medida", medida.name());
+        jb.put("medida", medida);
         jb.put("cantEnVenta", cantEnVenta);
         jb.put("vendidos", vendidos);
         return jb;
     }
-    public Producto toObject(JSONObject jb) {
-        Producto p = new Producto();
+    public void toObject(JSONObject jb) {
 
-        // Asignar ID
-        p.setId(UUID.fromString(jb.getString("id")));
-
-        // Asignar atributos básicos
-        p.setNombre(jb.getString("nombre"));
-        p.setMarca(jb.getString("marca"));
-        p.setDescripcionAdicional(jb.getString("descripcionAdicional"));
-        p.setPrecioUnitario(jb.getDouble("precioUnitario"));
-        p.setPeso(jb.getDouble("peso"));
-        p.setStock(jb.getInt("stock"));
-        p.setCantEnVenta(jb.getInt("cantEnVenta"));
-        p.setVendidos(jb.getInt("vendidos"));
-
-        // Enum ETipoMedida
-        String medidaStr = jb.getString("medida");
-        if (medidaStr != null && !medidaStr.equals("null")) {
-            try {
-                p.setMedida(ETipoMedida.valueOf(medidaStr));
-            } catch (IllegalArgumentException e) {
-                p.setMedida(null);
-            }
-        }
-
-        return p;
+        setId(UUID.fromString(jb.getString("id")));
+        setNombre(jb.getString("nombre"));
+        setMarca(jb.getString("marca"));
+        setDescripcionAdicional(jb.getString("descripcionAdicional"));
+        setPrecioUnitario(jb.getDouble("precioUnitario"));
+        setPeso(jb.getDouble("peso"));
+        setStock(jb.getInt("stock"));
+        setCantEnVenta(jb.getInt("cantEnVenta"));
+        setVendidos(jb.getInt("vendidos"));
+        setMedida(ETipoMedida.valueOf(jb.getString("medida")));
     }
     @Override
 	public int hashCode() {

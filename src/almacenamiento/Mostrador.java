@@ -4,6 +4,9 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.UUID;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import empleados.Limpiador;
 import interfaces.IEnsuciable;
 
@@ -17,6 +20,10 @@ public class Mostrador implements IEnsuciable{
         articulos = new TreeMap<Producto,Integer>();
         limiteArticulos = 1200;
     }  
+    
+    public static TreeMap<Producto, Integer> getArticulos() {
+		return articulos;
+	}
     
     public int getLimiteArticulos() {
 		return limiteArticulos;
@@ -58,12 +65,11 @@ public class Mostrador implements IEnsuciable{
                 return entry.getKey();
             }
         }
-
         return null;
     }
 
     //le resta valor a la cantEnVenta de un producto
-    public  boolean venderArticulo(String id,int cant)
+    public static boolean venderArticulo(String id,int cant)
     {
         boolean exito = false;
         if(buscarProducto(id)==null) return false;
@@ -73,10 +79,44 @@ public class Mostrador implements IEnsuciable{
             p.setCantEnVenta(p.getCantEnVenta()-cant);
 			 p.setVendidos(p.getVendidos()+cant);
             exito = true;
-            calcularIndiceSuciedad();
         }
 
         return exito;
+    }
+    
+    public JSONObject json()
+    {
+    	JSONObject jb = new JSONObject();
+    	
+    	jb.put("suciedad", getSuciedad());
+    	JSONArray jArray = new JSONArray();
+    	for (Map.Entry<Producto,Integer> entry : articulos.entrySet())
+    	{
+    		JSONObject jbArticulo = new JSONObject();
+    		jbArticulo.put("producto", entry.getKey().toJSON());
+    		jbArticulo.put("cantidad", entry.getValue());
+    		jArray.put(jbArticulo);		
+    	}
+    	jb.put("articulos",jArray);
+    	
+    	return jb;
+    }
+    public void toObject(JSONObject jb)
+    {
+    	JSONArray jArray = jb.getJSONArray("articulos");
+    	Mostrador.setSuciedad(jb.getInt("suciedad"));
+    	
+    	for(int i = 0 ; i<jArray.length() ; i++)
+    	{
+    		Producto p = new Producto();
+    		JSONObject jArticulo = jArray.getJSONObject(i);
+    		
+    		p.toObject(jArticulo.getJSONObject("producto"));
+    		
+    		int cantidad = jArticulo.getInt("cantidad");
+    		articulos.put(p, cantidad);
+    	}
+    	
     }
 
 	@Override

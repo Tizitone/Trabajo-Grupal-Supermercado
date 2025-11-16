@@ -12,7 +12,7 @@ import interfaces.IEnsuciable;
 
 public class Estanteria implements IEnsuciable{
     private UUID id;
-    private final ArrayList<Producto>productos;
+    private ArrayList<Producto>productos;
     private int capacidadProductos;
     private int suciedad=0;
 
@@ -34,6 +34,10 @@ public class Estanteria implements IEnsuciable{
    
     protected void setId(UUID id) {
 		this.id = id;
+	}
+   
+	protected ArrayList<Producto> getProductos() {
+		return productos;
 	}
 
 	public int getCapacidadProductos() {
@@ -128,15 +132,15 @@ public class Estanteria implements IEnsuciable{
         JSONObject jb = new JSONObject();
         JSONArray jProductos = new JSONArray();
 
+        jb.put("tipo", "estanteria"); // importante para JsonGestor
+        jb.put("id", id.toString());
+        jb.put("capacidadProductos", capacidadProductos);
+        jb.put("suciedad", suciedad);
+        
         // Convertir productos dentro de la estantería
         for (Producto p : productos) {
             jProductos.put(p.toJSON());
         }
-
-        jb.put("tipo", "Estanteria"); // importante para JsonGestor
-        jb.put("id", id.toString());
-        jb.put("capacidadProductos", capacidadProductos);
-        jb.put("suciedad", suciedad);
         jb.put("productos", jProductos);
 
         return jb;

@@ -1,0 +1,52 @@
+[{
+    "tipo": "Almacenamiento",
+    "id": "2e07af91-2038-4ed8-ae74-ae5496ac8c88",
+    "estanterias": [{
+        "tipo": "estanteria",
+        "capacidadProductos": 1410,
+        "id": "14367b2b-8202-4cf3-8c90-cc2cd44d44d4",
+        "suciedad": 3,
+        "productos": [
+            {
+                "marca": "Amanda",
+                "tipo": "producto",
+                "precioUnitario": 2000,
+                "vendidos": 0,
+                "medida": "GRAMO",
+                "peso": 500,
+                "id": "2527ffdf-33b6-4d80-b750-3e0166438323",
+                "descripcionAdicional": "largo fino",
+                "stock": 50,
+                "cantEnVenta": 0,
+                "nombre": "Arroz"
+            },
+            {
+                "marca": "serenisima",
+                "tipo": "producto",
+                "precioUnitario": 1500,
+                "vendidos": 0,
+                "medida": "LITRO",
+                "peso": 500,
+                "id": "160a88f9-2a76-45d4-bf5a-2e5aa57adaff",
+                "descripcionAdicional": "sabor frutilla",
+                "stock": 80,
+                "cantEnVenta": 0,
+                "nombre": "yogurt"
+            },
+            {
+                "marca": "Luchetti",
+                "tipo": "producto",
+                "precioUnitario": 800,
+                "vendidos": 0,
+                "medida": "KILOGRAMO",
+                "peso": 1,
+                "id": "2a65c429-6983-4aeb-8c2b-f0de355e2aca",
+                "descripcionAdicional": "spaguetti",
+                "stock": 60,
+                "cantEnVenta": 0,
+                "nombre": "Fideos"
+            }
+        ]
+    }],
+    "capacidad": 49
+}]
