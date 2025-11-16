@@ -84,6 +84,18 @@ public class Almacenamiento implements IGestionable<String>{
     	
     	return null;
     }
+    public boolean removerEstanteria(String id)
+    {
+
+        for(Estanteria a : estanterias)
+        {
+            if(id.equals(a.getId().toString()))
+             {
+                return estanterias.remove(a);
+             }
+        }
+       return false;
+    }
     public JSONObject toJson()
     {
     	JSONObject jb = new JSONObject();
@@ -136,6 +148,7 @@ public class Almacenamiento implements IGestionable<String>{
         return "Almacenamiento{" +
                 "id=" + id +
                 ", capacidadEstanterias=" + capacidadEstanterias +
+                ",\n estanterias= "+estanterias+
                 '}';
     }
 	@Override

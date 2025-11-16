@@ -4,8 +4,6 @@ import java.util.Scanner;
 
 import enumerators.ETipoMedida;
 import excepciones.InvalidDateException;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import almacenamiento.*;
 import clientes.*;
@@ -35,13 +33,11 @@ public class Main {
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 
-		almacenamiento.agregar(almacen);
+		m.toObject(archivoMostrador);
+		personal.getListaGestora().addAll(JsonGestor.cargarListaJSON(archivoPersonal));
+		administrativo.getListaGestora().addAll(JsonGestor.cargarListaJSON(archivoAdministrativo));
+		almacenamiento.getListaGestora().addAll(JsonGestor.cargarListaJSON(archivoAlmacenamiento));
 		
-		cargarJSONPersonal(personal,archivoPersonal);
-		cargarJSONAdministrativo(administrativo,archivoAdministrativo);
-		cargarJSONAlmacen(almacenamiento, archivoAlmacenamiento);
-		cargarMostrador(archivoMostrador);
-
 		char continuar;
 		do {
 			switch (bienvenida()) {
@@ -54,10 +50,7 @@ public class Main {
 					break;
 					
 				case 3:
-					menuGestor();
-					JsonGestor.guardarListaJSON(personal.getListaGestora(),archivoPersonal);
-					JsonGestor.guardarListaJSON(administrativo.getListaGestora(),archivoAdministrativo);
-					JsonGestor.guardarListaJSON(almacenamiento.getListaGestora(), archivoAlmacenamiento);
+					menuGestor();				
 					break;
 				case 0:
 					System.out.println("Hasta pronto...");
@@ -69,95 +62,6 @@ public class Main {
 			System.out.println("Desea continuar en el menu?(s/n)");
 			continuar = input.nextLine().toLowerCase().charAt(0);
 		}while (continuar == 's');
-	}
-	private static void cargarJSONPersonal(Gestion<Personal> personal,String archivo) {
-		// Leer el contenido JSON
-		JSONArray jArray = new JSONArray(JsonUtiles.leerUnJson(archivo));
-
-		// Recorrer los objetos
-		for (int i = 0; i < jArray.length(); i++) {
-			JSONObject jb = jArray.getJSONObject(i);
-
-			// Obtener tipo (por ejemplo: "Cajero", "Limpiador", etc.)
-			String tipo = jb.getString("tipo");
-
-			Personal p = null;
-
-			// Crear el objeto correspondiente según el tipo
-			switch (tipo) {
-				case "Cajero":
-					p = new Cajero(m);
-					break;
-				case "Limpiador":
-					p = new Limpiador();
-					break;
-				case "Repositor":
-					p = new Repositor();
-					break;
-				default:
-					System.out.println("Tipo de empleado desconocido: " + tipo);
-					continue;
-			}
-			// Llenar datos usando tu método toObject
-			p.toObject(jb);
-
-			// Agregar a la gestión
-			personal.getListaGestora().add(p);
-		}
-	}
-	private static void cargarJSONAdministrativo(Gestion<Administrativo> administrativo, String archivo) {
-		// Leer el contenido JSON
-		JSONArray jArray = new JSONArray(JsonUtiles.leerUnJson(archivo));
-
-		// Recorre los objetos
-		for (int i = 0; i < jArray.length(); i++) {
-			JSONObject jb = jArray.getJSONObject(i);
-
-			// Obtiene tipo (por ejemplo: "Cajero", "Limpiador", etc.)
-			String tipo = jb.getString("tipo");
-
-			Administrativo a = null;
-
-			// Crea el objeto correspondiente según el tipo
-			switch (tipo) {
-				case "Secretario":
-					a = new Secretario();
-					break;
-				case "RRHH":
-					a = new RRHH();
-					break;
-
-				default:
-					System.out.println("Tipo de empleado desconocido: " + tipo);
-					continue;
-			}
-
-			// Llenar datos usando el metodo toObject
-			a.toObject(jb);
-
-			// Agregar a la gestión
-			administrativo.getListaGestora().add(a);
-		}
-	}
-	private static void cargarJSONAlmacen(Gestion<Almacenamiento> almacenamiento, String archivo)
-	{
-		JSONArray jArray = new JSONArray(JsonUtiles.leerUnJson(archivo));
-		for(int i = 0; i < jArray.length(); i++)
-		{
-			JSONObject jb = jArray.getJSONObject(i);
-			Almacenamiento a = almacenamiento.getListaGestora().get(0);	
-			a.toObject(jb);
-		}
-		
-	}
-	private static void cargarMostrador(String archivo)
-	{
-		JSONArray jArray = new JSONArray(JsonUtiles.leerUnJson(archivo));
-		for(int i = 0; i < jArray.length(); i++)
-		{
-			JSONObject jb = jArray.getJSONObject(i);
-			m.toObject(jb);
-		}
 	}
 	
  	private static void menuPersonal()
@@ -249,6 +153,7 @@ public class Main {
 						c.venderProducto(codigo, cant);
 						System.out.println("Desea seguir vendiendo productos? (s/n)");
 						miembroContinuar = input.nextLine().toLowerCase().charAt(0);
+						m.toJson(archivoMostrador);
 					}
 					if(cliente == 's')
 					{
@@ -380,6 +285,8 @@ public class Main {
 					int cant = input.nextInt();
 					input.nextLine();
 					r.reponerProducto(m, almacenamiento.getListaGestora().get(0).buscarEstanteriaPorID(codigoEstanteria), codigoProducto, cant);
+					m.toJson(archivoMostrador);
+					JsonGestor.guardarListaJSON(almacenamiento.getListaGestora(), archivoAlmacenamiento);
 					break;
 				case 3:
 					r.contarStock();
@@ -708,11 +615,7 @@ public class Main {
 	}
 	private static void crearEmpleado() {
 		Scanner input = new Scanner(System.in);
-		System.out.println("Ingrese el tipo de empleado");
-		System.out.println("(1)-Personal");
-		System.out.println("(2)-Administrativo");
-		int seleccion = input.nextInt();
-		input.nextLine();
+		int seleccion = tipoEmpleado();
 
 		System.out.println("Ingrese el nombre");
 		String nombre = input.nextLine();
@@ -739,6 +642,14 @@ public class Main {
 				break;
 
 		}
+	}
+	private static int tipoEmpleado()
+	{
+		Scanner input = new Scanner(System.in);
+		System.out.println("Ingrese el tipo de empleado");
+		System.out.println("(1)-Personal");
+		System.out.println("(2)-Administrativo");
+		return input.nextInt();
 	}
 
 	private static void crearAdministrativo(String nombre, int dni, char genero, int salario, int antiguedad){
@@ -798,6 +709,76 @@ public class Main {
 	}
 	public static void menuGestor()
 	{
+		Scanner input = new Scanner(System.in);
+		System.out.println("Ingrese su cuenta/correo");
+		String correo = input.nextLine();
+		System.out.println("Ingrese su contraseña");
+		String contrasenia = input.nextLine();
+		if(Gestion.validadCuenta(correo, contrasenia)) {
+			System.out.println("Bienvenido admin");
+		switch (opcionGestor())
+		{
+			case 1:
+				 menuGestorAgregar();
+				break;
+			case 2:
+				menuGestorEliminar();
+				break;
+			case 3:
+				menuGestorListar();
+				break;
+			default:
+				break;
+		}
+		JsonGestor.guardarListaJSON(personal.getListaGestora(),archivoPersonal);
+		JsonGestor.guardarListaJSON(administrativo.getListaGestora(),archivoAdministrativo);
+		JsonGestor.guardarListaJSON(almacenamiento.getListaGestora(), archivoAlmacenamiento);
+		}
+		else
+		{
+			System.out.println("La cuenta o contraseña no son correctas");
+		}
+	}
+	public static int opcionGestor()
+	{
+		Scanner input = new Scanner(System.in);
+		System.out.println("Ingrese una opcion");
+		System.out.println("(1)-Agregar");
+		System.out.println("(2)-Eliminar");
+		System.out.println("(3)-Listar");
+		return input.nextInt();
+	}
+	public static void menuGestorListar()
+	{
+		Scanner input = new Scanner(System.in);
+		
+		System.out.println("Ingrese que lista desea ver:");
+		System.out.println("(1)-Personal");
+		System.out.println("(2)-Administrativo");
+		System.out.println("(3)-Almacenamiento");
+		System.out.println("(4)-Mostrador");
+		int seleccion = input.nextInt();
+		input.nextLine();
+		switch(seleccion)
+		{
+		case 1:
+			System.out.println(personal.listar());
+			break;
+		case 2:
+			System.out.println(administrativo.listar());
+			break;
+		case 3:
+			System.out.println(almacenamiento.listar());
+			break;
+		case 4:
+			System.out.println(Mostrador.listarArticulos());
+			break;
+			default:
+				break;
+		}
+	}
+	public static void menuGestorAgregar()
+	{
 		switch (opcionTipoObjeto())
 		{
 			case 1:
@@ -806,10 +787,94 @@ public class Main {
 			case 2:
 				crearAlmacenamiento();
 				break;
-
+			default:
+				break;
 		}
 	}
-	private static int opcionTipoObjeto()
+	public static void menuGestorEliminar()
+	{
+		switch (opcionTipoObjeto())
+		{
+			case 1:
+				eliminarEmpleado();
+				break;
+			case 2:
+				eliminarAlmacenamiento();
+				break;
+			default:
+				break;
+		}
+	}
+	public static void eliminarEmpleado()
+	{
+		Scanner input = new Scanner(System.in);	
+		System.out.println("ingrese el dni del Empleado a remover");
+		Integer dni = input.nextInt();
+		input.nextLine();
+		switch(tipoEmpleado())
+		{
+		case 1:
+			
+			if(personal.removerPorIdentificador(dni.toString()))
+			{
+				System.out.println("Personal removido con exito!");
+			}
+			else
+			{
+				System.out.println("no se encontro al personal con ese dni");
+			}
+			break;
+		case 2:
+			if(administrativo.removerPorIdentificador(dni.toString()))
+			{
+				System.out.println("Administrativo removido con exito!");
+			}
+			else
+			{
+				System.out.println("no se encontro al administrativo con ese dni");
+			}
+			break;
+			
+			default:
+				break;
+		}
+	}
+	public static void eliminarAlmacenamiento()
+	{
+		Scanner input = new Scanner(System.in);	
+		System.out.println("ingrese el id del producto/estanteria a remover");
+		String idSeleccion = input.nextLine();
+		switch(tipoEmpleado())
+		{
+		case 1:
+			
+			if(almacenamiento.getListaGestora().get(0).removerEstanteria(idSeleccion))
+			{
+				System.out.println("Personal removido con exito!");
+			}
+			else
+			{
+				System.out.println("No se encontro al personal con ese dni");
+			}
+			break;
+		case 2:
+			System.out.println("Ingrese la id donde se encuentra el producto: ");
+			String estanteria = input.nextLine();
+			if(almacenamiento.getListaGestora().get(0).buscarEstanteriaPorID(estanteria).eliminarProducto(idSeleccion))
+			{
+				System.out.println("Producto removido con exito!");
+			}
+			else
+			{
+				System.out.println("No se encontro un producto con ese dni");
+			}
+			break;
+			
+			default:
+				break;
+		}
+	}
+ 	private static int opcionTipoObjeto()
 	{
 		Scanner input = new Scanner(System.in);
 		System.out.println("Ingrese una opcion");

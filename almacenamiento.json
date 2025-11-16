@@ -3,9 +3,9 @@
     "id": "2e07af91-2038-4ed8-ae74-ae5496ac8c88",
     "estanterias": [{
         "tipo": "estanteria",
-        "capacidadProductos": 1410,
+        "capacidadProductos": 1455,
         "id": "14367b2b-8202-4cf3-8c90-cc2cd44d44d4",
-        "suciedad": 3,
+        "suciedad": 7,
         "productos": [
             {
                 "marca": "Amanda",
@@ -16,8 +16,8 @@
                 "peso": 500,
                 "id": "2527ffdf-33b6-4d80-b750-3e0166438323",
                 "descripcionAdicional": "largo fino",
-                "stock": 50,
-                "cantEnVenta": 0,
+                "stock": 30,
+                "cantEnVenta": 10,
                 "nombre": "Arroz"
             },
             {

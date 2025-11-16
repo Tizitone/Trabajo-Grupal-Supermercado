@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import empleados.Limpiador;
 import interfaces.IEnsuciable;
+import main.JsonUtiles;
 
 public class Mostrador implements IEnsuciable{
 
@@ -55,6 +56,17 @@ public class Mostrador implements IEnsuciable{
         }
         return exito;
     }
+    public static String listarArticulos()
+    {
+    	StringBuilder sb = new StringBuilder();
+    	for (Map.Entry<Producto,Integer> entry : articulos.entrySet())
+        {
+            sb.append(entry.getKey().toString()).append("\n");
+        }
+    	
+    	return sb.toString();
+    }
+    
     //busca un producto por uuid
     public static Producto buscarProducto(String id)
     {
@@ -84,39 +96,46 @@ public class Mostrador implements IEnsuciable{
         return exito;
     }
     
-    public JSONObject json()
+    public void toJson(String archivo)
     {
-    	JSONObject jb = new JSONObject();
-    	
-    	jb.put("suciedad", getSuciedad());
-    	JSONArray jArray = new JSONArray();
-    	for (Map.Entry<Producto,Integer> entry : articulos.entrySet())
-    	{
-    		JSONObject jbArticulo = new JSONObject();
-    		jbArticulo.put("producto", entry.getKey().toJSON());
-    		jbArticulo.put("cantidad", entry.getValue());
-    		jArray.put(jbArticulo);		
-    	}
-    	jb.put("articulos",jArray);
-    	
-    	return jb;
+        JSONObject jb = new JSONObject();
+        JSONArray jArray = new JSONArray();
+        jb.put("suciedad", getSuciedad());
+        
+        JSONArray jsonArticulosArray = new JSONArray();
+        for (Map.Entry<Producto, Integer> entry : articulos.entrySet()) {
+            JSONObject articuloJson = new JSONObject();
+            articuloJson.put("producto", entry.getKey().toJSON());
+            articuloJson.put("cantidad", entry.getValue());
+            jsonArticulosArray.put(articuloJson);
+        }
+        jb.put("articulos", jsonArticulosArray);
+        jArray.put(jb);
+        // Si solo quieres guardar un objeto
+        JsonUtiles.grabarUnJson(jArray, archivo);
     }
-    public void toObject(JSONObject jb)
+    public void toObject(String archivo)
     {
-    	JSONArray jArray = jb.getJSONArray("articulos");
-    	Mostrador.setSuciedad(jb.getInt("suciedad"));
+    	Mostrador.articulos.clear();
     	
-    	for(int i = 0 ; i<jArray.length() ; i++)
+    	JSONArray jArray = new JSONArray(JsonUtiles.leerUnJson(archivo));
+    	
+    	for(int i = 0; i < jArray.length(); i++)
     	{
-    		Producto p = new Producto();
-    		JSONObject jArticulo = jArray.getJSONObject(i);
-    		
-    		p.toObject(jArticulo.getJSONObject("producto"));
-    		
-    		int cantidad = jArticulo.getInt("cantidad");
-    		articulos.put(p, cantidad);
+    		JSONObject jb = jArray.getJSONObject(i);
+    		JSONArray jArrayAux = jb.getJSONArray("articulos");
+    		for(int j = 0 ; j<jArrayAux.length() ; j++)
+        	{
+        		Producto p = new Producto();
+        		JSONObject jArticulo = jArrayAux.getJSONObject(j);
+        		
+        		p.toObject(jArticulo.getJSONObject("producto"));
+        		
+        		int cantidad = jArticulo.getInt("cantidad");
+        		articulos.put(p, cantidad);
+        	}
+    		Mostrador.setSuciedad(jb.getInt("suciedad"));
     	}
-    	
     }
 
 	@Override

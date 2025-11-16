@@ -170,8 +170,8 @@ public class Producto implements Comparable<Producto>{
 
 	@Override
 	public String toString() {
-		return "Producto [\n id=" + id + ",\n nombre=" + nombre + ",\n marca=" + marca + ",\n descripcion="
-				+ descripcionAdicional + ",\n precioUnitario=" + precioUnitario + ",\n stock=" + stock + ",\n peso=" + peso
+		return "Producto [ id=" + id + ", nombre=" + nombre + ", marca=" + marca + ", descripcion="
+				+ descripcionAdicional + ", precioUnitario=" + precioUnitario + ", stock=" + stock + ", peso=" + peso
 				+ medida.getMedida() + "]\n";
 	}
 

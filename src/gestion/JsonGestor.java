@@ -40,14 +40,15 @@ public class JsonGestor {
         try (PrintWriter file = new PrintWriter(archivo)) {
             file.println(jArray.toString(4)); // con sangría
             file.close();
-            System.out.println("Datos guardados en " + rutaArchivo);
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static ArrayList<Object> cargarListaJSON(String rutaArchivo) {
-        ArrayList<Object> lista = new ArrayList<>();
+    @SuppressWarnings("unchecked")
+	public static <T> ArrayList<T> cargarListaJSON(String rutaArchivo) {
+        ArrayList<T> lista = new ArrayList<>();
 
         try {
             String contenido = new String(Files.readAllBytes(Paths.get(rutaArchivo)));
@@ -55,45 +56,41 @@ public class JsonGestor {
 
             for (int i = 0; i < jArray.length(); i++) {
                 JSONObject jb = jArray.getJSONObject(i);
-                String tipo = jb.optString("tipo");
+                String tipo = jb.getString("tipo").toLowerCase();
 
                 Object obj = null;
 
                 // EMPLEADOS
                 switch (tipo) {
-                    case "Cajero":
+                    case "cajero":
                         obj = new Cajero();
                         ((Cajero) obj).toObject(jb);
                         break;
-                    case "Repositor":
+                    case "repositor":
                         obj = new Repositor();
                         ((Repositor) obj).toObject(jb);
                         break;
-                    case "Limpiador":
+                    case "limpiador":
                         obj = new Limpiador();
                         ((Limpiador) obj).toObject(jb);
                         break;
-                    case "Secretario":
+                    case "secretario":
                         obj = new Secretario();
                         ((Secretario) obj).toObject(jb);
                         break;
-                    case "RRHH":
+                    case "rrhh":
                         obj = new RRHH();
                         ((RRHH) obj).toObject(jb);
                         break;
 
                     // ALMACENAMIENTO
-                    case "Producto":
-                        obj = new Producto();
-                        ((Producto) obj).toObject(jb);
-                        break;
-                    case "Estanteria":
-                        obj = new Estanteria();
-                        ((Estanteria) obj).toObject(jb);
-                        break;
+                    case "almacenamiento":
+                        obj = new Almacenamiento(50);
+                        ((Almacenamiento) obj).toObject(jb);
+                        break;              
 
                     // CLIENTES
-                    case "Cliente":
+                    case "cliente":
                         obj = new Cliente();
                         ((Cliente) obj).toObject(jb);
                         break;
@@ -103,7 +100,7 @@ public class JsonGestor {
                         continue;
                 }
 
-                lista.add(obj);
+                lista.add((T)obj);
             }
 
         } catch (IOException e) {

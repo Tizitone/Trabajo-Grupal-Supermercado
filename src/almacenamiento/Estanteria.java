@@ -110,6 +110,7 @@ public class Estanteria implements IEnsuciable{
                     capacidadProductos=1500;
                 }
                 calcularIndiceSuciedad();
+                p.setStock(p.getStock()-cant);
                 p.setCantEnVenta(cant);
                 return p;
             }
@@ -181,6 +182,7 @@ public class Estanteria implements IEnsuciable{
         return "Estanteria{" +
                 "id=" + id +
                 ", limiteProductos=" + capacidadProductos +
+                ", productos= \n "+ productos +
                 '}';
     }
 

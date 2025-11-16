@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.json.JSONTokener;
 
 public class JsonUtiles {
@@ -14,6 +15,15 @@ public class JsonUtiles {
         try {
             PrintWriter file = new PrintWriter(archivo);
             file.write(jsonArray.toString(4));
+            file.close();
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void grabarUnJson(JSONObject jsonObject, String archivo){
+        try {
+            PrintWriter file = new PrintWriter(archivo);
+            file.write(jsonObject.toString(4));
             file.close();
         } catch (IOException | JSONException e) {
             e.printStackTrace();

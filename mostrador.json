@@ -1,1 +1,19 @@
-[]
+[{
+    "articulos": [{
+        "producto": {
+            "marca": "Amanda",
+            "tipo": "producto",
+            "precioUnitario": 2000,
+            "vendidos": 7,
+            "medida": "GRAMO",
+            "peso": 500,
+            "id": "2527ffdf-33b6-4d80-b750-3e0166438323",
+            "descripcionAdicional": "largo fino",
+            "stock": 30,
+            "cantEnVenta": 3,
+            "nombre": "Arroz"
+        },
+        "cantidad": 10
+    }],
+    "suciedad": 1
+}]

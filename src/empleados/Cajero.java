@@ -105,19 +105,20 @@ public class Cajero extends Personal implements ISalario, IRendimiento {
     {
         StringBuilder sb = new StringBuilder();
         this.totalVenta = 0;
-        ventas.put(new Venta(),auxVentas); //crea una instancia de venta con la fecha actual, y como valor le pasa el arreglo de productos
-        auxVentas.clear(); //limpia el auxiliar una vez que se agrego a las ventas
-
-        Map.Entry<Venta, ArrayList<Producto>> auxVentas = ventas.entrySet().iterator().next(); // variable de tipo entrymap para obtener la clave y el valor que sean las ultimas en la lista
         
-        for(Producto p : auxVentas.getValue())
+        Venta nuevaVenta = new Venta();
+        ArrayList<Producto> productosVendidos = new ArrayList<>(auxVentas); // copia para esta venta
+        ventas.put(nuevaVenta, productosVendidos);
+        auxVentas.clear();
+        
+        for(Producto p : productosVendidos)
     	{
     		totalVenta += p.getPrecioUnitario();
     	}
         
-        sb.append(auxVentas.getKey()) //obtiene la clave de las ventas
+        sb.append(nuevaVenta) //obtiene las ventas
                 .append("\n")
-                .append(auxVentas.getValue())
+                .append(productosVendidos)
                 .append(this.totalVenta); // obtiene el valor de las ventas
 
         return sb.toString();
@@ -176,7 +177,7 @@ public class Cajero extends Personal implements ISalario, IRendimiento {
 
 	@Override
 	public String toString() {
-		return "Cajero[ "+super.toString()+",mostradorAsignado=" + mostradorAsignado + "]";
+		return "Cajero	  ["+super.toString()+",mostradorAsignado=" + mostradorAsignado + "]";
 	}
 
 	@Override
