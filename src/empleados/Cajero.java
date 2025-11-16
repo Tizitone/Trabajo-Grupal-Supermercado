@@ -34,6 +34,10 @@ public class Cajero extends Personal implements ISalario, IRendimiento {
         super("", 0, 'n');
         this.mostradorAsignado = null;
     }
+    public Cajero(Mostrador m){
+        super("", 0, 'n');
+        this.mostradorAsignado = null;
+    }
 
     /**
      * Construye un nuevo {@code Cajero} como si fuera un nuevo empleado, pidiendo solo información obligatoria.
@@ -82,7 +86,7 @@ public class Cajero extends Personal implements ISalario, IRendimiento {
     public boolean venderProducto(String id, int cant)
     {
         boolean exito = false;
-        exito = mostradorAsignado.venderArticulo(id, cant); //del mostrador asignado, le resta valor a la variable cantEnVenta del producto y si se pudo vender, se agrega al aux
+        exito = Mostrador.venderArticulo(id, cant); //del mostrador asignado, le resta valor a la variable cantEnVenta del producto y si se pudo vender, se agrega al aux
         if(exito)
         {
             auxVentas.add(Mostrador.buscarProducto(id)); //en el aux ventas registra los productos que se van a vender, buscandolos por id
@@ -136,11 +140,15 @@ public class Cajero extends Personal implements ISalario, IRendimiento {
     }
     
     public void atenderMiembro(Cliente cliente){
-    	if(buscarMiembro(cliente.getDNI())==null) throw new InvalidDNIException("No se ha encontrado al cliente");
+        try{
+            if(buscarMiembro(cliente.getDNI())==null) throw new InvalidDNIException("No se ha encontrado al cliente");
     		
-        cliente.setConsumosTotales(cliente.getConsumosTotales()+(totalVenta * (1-cliente.getDescuento())));
+            cliente.setConsumosTotales(cliente.getConsumosTotales()+(totalVenta * (1-cliente.getDescuento())));
 
-        setProductividad(getProductividad() + 1 );
+            setProductividad(getProductividad() + 1 );
+        } catch (InvalidDNIException idnie) {
+            idnie.getMessage();
+        }
     }
 
     public void atenderCliente(){

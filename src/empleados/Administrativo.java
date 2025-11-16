@@ -56,7 +56,7 @@ public abstract class Administrativo extends Empleado implements ISalario, IGest
 		JSONObject jb = new JSONObject();
 		jb.put("nombre", this.getNombre());
 		jb.put("dni",this.getDNI());
-		jb.put("genero",String.valueOf(getGenero()).charAt(0));
+		jb.put("genero",String.valueOf(this.getGenero()));
 		jb.put("salario", this.getSalario());
 		jb.put("activo", this.isActivo());
 		jb.put("antiguedad", this.getAntiguedad());
@@ -70,7 +70,7 @@ public abstract class Administrativo extends Empleado implements ISalario, IGest
 		// TODO Auto-generated method stub
 		this.setNombre(jb.getString("nombre"));
 		this.setDNI(jb.getInt("dni"));
-		this.setGenero((char)jb.getString("genero").charAt(0));
+		this.setGenero(jb.getString("genero").charAt(0));
 		this.setSalario(jb.getInt("salario"));
 		this.setActivo(jb.getBoolean("activo"));
 		this.setAntiguedad(jb.getInt("antiguedad"));
