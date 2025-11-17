@@ -13,7 +13,7 @@ import java.util.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class Cajero extends Personal implements ISalario, IRendimiento {
+public class Cajero extends Personal implements IRendimiento {
 
     /*use linkedhashmap para mantener por orden de insercion las ventas, cree tambien el
     arreglo auxVentas para tener una lista de los productos vendidos y una clase venta
@@ -98,7 +98,6 @@ public class Cajero extends Personal implements ISalario, IRendimiento {
     /**
      * Registra las compras de un cliente y devuelve un string como si fuera un ticket.
      *
-     * @param idProducto Código de los productos que compra el cliente.
      * @return {@code String} que representa el ticket de la venta.
      */
     public String registrarCompras()

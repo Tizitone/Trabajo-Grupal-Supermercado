@@ -8,7 +8,7 @@ import interfaces.ISalario;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class Limpiador extends Personal implements ISalario, IRendimiento{
+public class Limpiador extends Personal implements IRendimiento{
 
 	//los limpiadores tendran una variable estatica que les permita ver si el mostrador esta limpio
 	private static boolean tiendaLimpia = false;

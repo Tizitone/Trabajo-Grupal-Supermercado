@@ -77,7 +77,8 @@ public class Mostrador implements IEnsuciable{
                 return entry.getKey();
             }
         }
-        return null;
+        System.out.println("No se ha podido encontrar el objeto");
+        return new Producto();
     }
 
     //le resta valor a la cantEnVenta de un producto

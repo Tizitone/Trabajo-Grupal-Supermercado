@@ -44,6 +44,17 @@ public class Estanteria implements IEnsuciable{
         return capacidadProductos;
     }
 
+    public Producto buscarProducto(String id){
+        for(Producto p : productos)
+        {
+            if(p.getId().toString().equals(id))
+            {
+                return p;
+            }
+        }
+        return  null;
+    }
+
     public void setCapacidadProductos(int capacidadProductos) {
         this.capacidadProductos = capacidadProductos;
     }

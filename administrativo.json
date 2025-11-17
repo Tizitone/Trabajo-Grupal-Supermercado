@@ -1,1 +1,24 @@
-[]
+[
+    {
+        "tipo": "Secretario",
+        "genero": "h",
+        "salario": 80000,
+        "antiguedad": 0,
+        "correo": "renzo2@gmail.com",
+        "contrasenia": "123456789",
+        "nombre": "renzo",
+        "dni": 84895678,
+        "activo": true
+    },
+    {
+        "tipo": "RRHH",
+        "genero": "h",
+        "salario": 90000,
+        "antiguedad": 0,
+        "correo": "lucas4@yahoo.com",
+        "contrasenia": "87654321",
+        "nombre": "lucas",
+        "dni": 47716549,
+        "activo": true
+    }
+]

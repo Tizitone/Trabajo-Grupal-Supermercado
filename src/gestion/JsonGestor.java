@@ -46,7 +46,7 @@ public class JsonGestor {
         }
     }
 
-    @SuppressWarnings("unchecked")
+
 	public static <T> ArrayList<T> cargarListaJSON(String rutaArchivo) {
         ArrayList<T> lista = new ArrayList<>();
 

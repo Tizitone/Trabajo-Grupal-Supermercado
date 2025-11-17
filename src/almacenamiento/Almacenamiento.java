@@ -19,6 +19,7 @@ public class Almacenamiento implements IGestionable<String>{
         this.estanterias = new ArrayList<Estanteria>();
         this.capacidadEstanterias = 0;
     }
+
     public Almacenamiento(int capacidadEstanterias) {
         this.id = UUID.randomUUID();
         this.estanterias = new ArrayList<Estanteria>();

@@ -1,11 +1,12 @@
 package empleados;
 
+import interfaces.ISalario;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import interfaces.IGestionable;
 
-public abstract class Personal extends Empleado implements IGestionable<Integer>{
+public abstract class Personal extends Empleado implements ISalario, IGestionable<Integer>{
 
     // Atributos
     private int productividad;

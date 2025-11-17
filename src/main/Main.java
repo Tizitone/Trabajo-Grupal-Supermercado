@@ -153,10 +153,12 @@ public class Main {
 						System.out.println("Ingrese el codigo del producto");
 						String codigo = validarString(36, 36);
 
+
 						System.out.println("Ingrese la cantidad a vender del mismo");
-						int cant = validarInt();
+						int cant = validarInt(Mostrador.buscarProducto(codigo).getCantEnVenta());
 
 						c.venderProducto(codigo, cant);
+
 						System.out.println("Desea seguir vendiendo productos? (s/n)");
 						continuarAtendiendo	 = input.nextLine().toLowerCase().charAt(0);
 						m.toJson(archivoMostrador);
@@ -592,7 +594,7 @@ public class Main {
 		int salario = validarInt();
 
 		System.out.println("Ingrese el antiguedad");
-		int antiguedad = validarInt();
+		int antiguedad = validarInt(0,60);
 
 		switch (seleccion) {
 
@@ -666,10 +668,10 @@ public class Main {
 
 	public static void menuGestor() {
 		System.out.println("Ingrese su cuenta/correo");
-		String correo = validarCorreo();
+		String correo = validarString(1, 24);
 
 		System.out.println("Ingrese su contraseña");
-		String contrasenia = validarString(8,24);
+		String contrasenia = validarString(1,24);
 
 		if(Gestion.validadCuenta(correo, contrasenia)) {
 			System.out.println("""
@@ -895,7 +897,7 @@ public class Main {
 			return entero;
 
 		}catch(InputMismatchException ime){
-			System.out.println("Opcion invalida, ingrese una opcion dentro del rango (debe ser entre " + base + " y " + tope + ":" + ime.getMessage());
+			System.out.println("Opcion invalida, ingrese una opcion dentro del rango (debe ser entre " + base + " y " + tope + "):" + ime.getMessage());
 			return validarInt(base, tope);
 		}
 	}
@@ -908,11 +910,11 @@ public class Main {
 		try{
 			int entero = validarInt();
 
-			if (entero > limite) throw new InputMismatchException("el limite del rango es: " + limite);
+			if (entero > limite) throw new InputMismatchException(": " + limite);
 			return entero;
 
 		}catch(InputMismatchException ime){
-			System.out.println("Opcion invalida, ingrese una opcion dentro del rango: " + ime.getMessage());
+			System.out.println("Opcion invalida, ingrese una opcion dentro del limite del rango" + ime.getMessage());
 			return validarInt(limite);
 		}
 	}
@@ -926,11 +928,14 @@ public class Main {
 		try{
 			int entero = input.nextInt();
 
-			if (entero < 1) throw new InputMismatchException(": el numero no puede ser negativo.");
+			if (entero < 0) throw new IndexOutOfBoundsException();
 			return entero;
 
 		}catch(InputMismatchException ime){
-			System.out.println("Opcion invalida, ingrese una opcion dentro del rango" + ime.getMessage());
+			System.out.println("Opcion invalida, debe ingresar un valor numerico.");
+			return validarInt();
+		}catch (IndexOutOfBoundsException ioobe){
+			System.out.println("Opcion invalida, el valor ingresado debe ser positivo.");
 			return validarInt();
 		}
 	}
@@ -965,7 +970,7 @@ public class Main {
 
 	private static String validarString(int base, int tope){
 		Scanner input = new Scanner(System.in);
-		String validar = input.next();
+		String validar = input.nextLine();
 
 		try{
 			if (validar.length() > tope)
@@ -975,14 +980,14 @@ public class Main {
 			return validar;
 
 		}catch(InvalidLengthException ile){
-			ile.getMessage();
+			System.out.println(ile.getMessage());
 			return validarString(base, tope);
 		}
 	}
 
 	private static char validarGenero(){
 		Scanner input = new Scanner(System.in);
-		char validar = input.next().toLowerCase().charAt(0);
+		char validar = input.nextLine().toLowerCase().charAt(0);
 
 		try{
 			if (validar != 'h' && validar != 'm' && validar != 'o')
@@ -999,7 +1004,7 @@ public class Main {
 		String validar = validarString(15, 42);
 
 		try{
-			if (!validar.contains("@gmail.com") || !validar.contains("@hotmail.com") || !validar.contains("@yahoo.com"))
+			if (!validar.contains("@gmail.com") && !validar.contains("@hotmail.com") && !validar.contains("@yahoo.com"))
 				throw new IllegalArgumentException("El valor ingresado no se detecto como una direccion de correo electronico valido.");
 		}catch (IllegalArgumentException iae){
 			System.out.println(iae.getMessage());
