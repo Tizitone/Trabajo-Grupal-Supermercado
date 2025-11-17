@@ -11,7 +11,7 @@ import almacenamiento.Mostrador;
 import interfaces.IRendimiento;
 import interfaces.ISalario;
 
-public class Repositor extends Personal implements ISalario, IRendimiento{
+public class Repositor extends Personal implements  IRendimiento{
 
 	public Repositor(){
         super();

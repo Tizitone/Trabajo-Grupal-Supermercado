@@ -1,6 +1,6 @@
 package excepciones;
 
-public class InvalidDNIException extends RuntimeException {
+public class InvalidDNIException extends Exception {
 	
 	
     /**

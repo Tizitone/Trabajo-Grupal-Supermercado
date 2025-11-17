@@ -35,9 +35,24 @@ public class Estanteria implements IEnsuciable{
     protected void setId(UUID id) {
 		this.id = id;
 	}
+   
+	protected ArrayList<Producto> getProductos() {
+		return productos;
+	}
 
 	public int getCapacidadProductos() {
         return capacidadProductos;
+    }
+
+    public Producto buscarProducto(String id){
+        for(Producto p : productos)
+        {
+            if(p.getId().toString().equals(id))
+            {
+                return p;
+            }
+        }
+        return  null;
     }
 
     public void setCapacidadProductos(int capacidadProductos) {
@@ -106,6 +121,7 @@ public class Estanteria implements IEnsuciable{
                     capacidadProductos=1500;
                 }
                 calcularIndiceSuciedad();
+                p.setStock(p.getStock()-cant);
                 p.setCantEnVenta(cant);
                 return p;
             }
@@ -128,15 +144,15 @@ public class Estanteria implements IEnsuciable{
         JSONObject jb = new JSONObject();
         JSONArray jProductos = new JSONArray();
 
+        jb.put("tipo", "estanteria"); // importante para JsonGestor
+        jb.put("id", id.toString());
+        jb.put("capacidadProductos", capacidadProductos);
+        jb.put("suciedad", suciedad);
+        
         // Convertir productos dentro de la estantería
         for (Producto p : productos) {
             jProductos.put(p.toJSON());
         }
-
-        jb.put("tipo", "Estanteria"); // importante para JsonGestor
-        jb.put("id", id.toString());
-        jb.put("capacidadProductos", capacidadProductos);
-        jb.put("suciedad", suciedad);
         jb.put("productos", jProductos);
 
         return jb;
@@ -177,6 +193,7 @@ public class Estanteria implements IEnsuciable{
         return "Estanteria{" +
                 "id=" + id +
                 ", limiteProductos=" + capacidadProductos +
+                ", productos= \n "+ productos +
                 '}';
     }
 

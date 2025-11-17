@@ -8,7 +8,7 @@ import interfaces.ISalario;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class Limpiador extends Personal implements ISalario, IRendimiento{
+public class Limpiador extends Personal implements IRendimiento{
 
 	//los limpiadores tendran una variable estatica que les permita ver si el mostrador esta limpio
 	private static boolean tiendaLimpia = false;
@@ -41,6 +41,12 @@ public class Limpiador extends Personal implements ISalario, IRendimiento{
 	public static void setTiendaLimpia(boolean tiendaLimpia) {
 		Limpiador.tiendaLimpia = tiendaLimpia;
 	}
+	
+
+	@Override
+	public String toString() {
+		return "Limpiador ["+super.toString()+"rendimientoActual=" + rendimientoActual + "]";
+	}
 
 	// TODO: aca modifique la variable seLimpio para que sea un retorno directo, fijate si te parece y lo cambio tmb abajo, creo que hace mas legible el codigo.
 	/**
@@ -54,7 +60,7 @@ public class Limpiador extends Personal implements ISalario, IRendimiento{
 		if(mostrador.getSuciedad()>50) {
 			Limpiador.setTiendaLimpia(true);
 			this.rendimientoActual+=18;
-			mostrador.setSuciedad(0);
+			Mostrador.setSuciedad(0);
 			return true;
 		}
 		return false;

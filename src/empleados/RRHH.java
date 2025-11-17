@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import interfaces.ISalario;
 import registros.Entrevista;
 
-public class RRHH extends Administrativo implements ISalario {
+public class RRHH extends Administrativo {
 
 	private LinkedHashMap<Integer,Entrevista> entrevistasAgendadas;
 

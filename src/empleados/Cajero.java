@@ -13,7 +13,7 @@ import java.util.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class Cajero extends Personal implements ISalario, IRendimiento {
+public class Cajero extends Personal implements IRendimiento {
 
     /*use linkedhashmap para mantener por orden de insercion las ventas, cree tambien el
     arreglo auxVentas para tener una lista de los productos vendidos y una clase venta
@@ -86,7 +86,7 @@ public class Cajero extends Personal implements ISalario, IRendimiento {
     public boolean venderProducto(String id, int cant)
     {
         boolean exito = false;
-        exito = mostradorAsignado.venderArticulo(id, cant); //del mostrador asignado, le resta valor a la variable cantEnVenta del producto y si se pudo vender, se agrega al aux
+        exito = Mostrador.venderArticulo(id, cant); //del mostrador asignado, le resta valor a la variable cantEnVenta del producto y si se pudo vender, se agrega al aux
         if(exito)
         {
             auxVentas.add(Mostrador.buscarProducto(id)); //en el aux ventas registra los productos que se van a vender, buscandolos por id
@@ -98,26 +98,26 @@ public class Cajero extends Personal implements ISalario, IRendimiento {
     /**
      * Registra las compras de un cliente y devuelve un string como si fuera un ticket.
      *
-     * @param idProducto Código de los productos que compra el cliente.
      * @return {@code String} que representa el ticket de la venta.
      */
     public String registrarCompras()
     {
         StringBuilder sb = new StringBuilder();
         this.totalVenta = 0;
-        ventas.put(new Venta(),auxVentas); //crea una instancia de venta con la fecha actual, y como valor le pasa el arreglo de productos
-        auxVentas.clear(); //limpia el auxiliar una vez que se agrego a las ventas
-
-        Map.Entry<Venta, ArrayList<Producto>> auxVentas = ventas.entrySet().iterator().next(); // variable de tipo entrymap para obtener la clave y el valor que sean las ultimas en la lista
         
-        for(Producto p : auxVentas.getValue())
+        Venta nuevaVenta = new Venta();
+        ArrayList<Producto> productosVendidos = new ArrayList<>(auxVentas); // copia para esta venta
+        ventas.put(nuevaVenta, productosVendidos);
+        auxVentas.clear();
+        
+        for(Producto p : productosVendidos)
     	{
     		totalVenta += p.getPrecioUnitario();
     	}
         
-        sb.append(auxVentas.getKey()) //obtiene la clave de las ventas
+        sb.append(nuevaVenta) //obtiene las ventas
                 .append("\n")
-                .append(auxVentas.getValue())
+                .append(productosVendidos)
                 .append(this.totalVenta); // obtiene el valor de las ventas
 
         return sb.toString();
@@ -140,11 +140,15 @@ public class Cajero extends Personal implements ISalario, IRendimiento {
     }
     
     public void atenderMiembro(Cliente cliente){
-    	if(buscarMiembro(cliente.getDNI())==null) throw new InvalidDNIException("No se ha encontrado al cliente");
+        try{
+            if(buscarMiembro(cliente.getDNI())==null) throw new InvalidDNIException("No se ha encontrado al cliente");
     		
-        cliente.setConsumosTotales(cliente.getConsumosTotales()+(totalVenta * (1-cliente.getDescuento())));
+            cliente.setConsumosTotales(cliente.getConsumosTotales()+(totalVenta * (1-cliente.getDescuento())));
 
-        setProductividad(getProductividad() + 1 );
+            setProductividad(getProductividad() + 1 );
+        } catch (InvalidDNIException idnie) {
+            idnie.getMessage();
+        }
     }
 
     public void atenderCliente(){
@@ -172,7 +176,7 @@ public class Cajero extends Personal implements ISalario, IRendimiento {
 
 	@Override
 	public String toString() {
-		return "Cajero[ "+super.toString()+",mostradorAsignado=" + mostradorAsignado + "]";
+		return "Cajero	  ["+super.toString()+",mostradorAsignado=" + mostradorAsignado + "]";
 	}
 
 	@Override

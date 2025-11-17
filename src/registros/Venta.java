@@ -70,7 +70,7 @@ public class Venta {
 
 	@Override
 	public String toString() {
-		return "Venta [id=" + id + ", getFechaLocal()=" + fecha + ", getHorarioLocal()=" + hora
+		return "Venta [id=" + id + ", fecha=" + fecha + ", getHorarioLocal()=" + hora
 				+ "]";
 	}
 	

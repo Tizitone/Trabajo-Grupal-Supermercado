@@ -125,6 +125,7 @@ public class Producto implements Comparable<Producto>{
 
     public JSONObject toJSON() {
         JSONObject jb = new JSONObject();
+        jb.put("tipo", "producto");
         jb.put("id", id.toString());
         jb.put("nombre", nombre);
         jb.put("marca", marca);
@@ -137,21 +138,18 @@ public class Producto implements Comparable<Producto>{
         jb.put("vendidos", vendidos);
         return jb;
     }
-    public Producto toObject(JSONObject jb) {
-        Producto p = new Producto();
+    public void toObject(JSONObject jb) {
 
-        p.setId(UUID.fromString(jb.getString("id")));
-        p.setNombre(jb.getString("nombre"));
-        p.setMarca(jb.getString("marca"));
-        p.setDescripcionAdicional(jb.getString("descripcionAdicional"));
-        p.setPrecioUnitario(jb.getDouble("precioUnitario"));
-        p.setPeso(jb.getDouble("peso"));
-        p.setStock(jb.getInt("stock"));
-        p.setCantEnVenta(jb.getInt("cantEnVenta"));
-        p.setVendidos(jb.getInt("vendidos"));
-        p.setMedida(ETipoMedida.valueOf(jb.getString("medida")));
-
-        return p;
+        setId(UUID.fromString(jb.getString("id")));
+        setNombre(jb.getString("nombre"));
+        setMarca(jb.getString("marca"));
+        setDescripcionAdicional(jb.getString("descripcionAdicional"));
+        setPrecioUnitario(jb.getDouble("precioUnitario"));
+        setPeso(jb.getDouble("peso"));
+        setStock(jb.getInt("stock"));
+        setCantEnVenta(jb.getInt("cantEnVenta"));
+        setVendidos(jb.getInt("vendidos"));
+        setMedida(ETipoMedida.valueOf(jb.getString("medida")));
     }
     @Override
 	public int hashCode() {
@@ -172,8 +170,8 @@ public class Producto implements Comparable<Producto>{
 
 	@Override
 	public String toString() {
-		return "Producto [\n id=" + id + ",\n nombre=" + nombre + ",\n marca=" + marca + ",\n descripcion="
-				+ descripcionAdicional + ",\n precioUnitario=" + precioUnitario + ",\n stock=" + stock + ",\n peso=" + peso
+		return "Producto [ id=" + id + ", nombre=" + nombre + ", marca=" + marca + ", descripcion="
+				+ descripcionAdicional + ", precioUnitario=" + precioUnitario + ", stock=" + stock + ", peso=" + peso
 				+ medida.getMedida() + "]\n";
 	}
 
